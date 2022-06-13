@@ -1,0 +1,38 @@
+# Copyright (c) 2022 Unionman Technology Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+import("//build/ohos/ndk/ndk.gni")
+
+config("ge2d-common_config") {
+  include_dirs = [ "include" ]
+}
+
+ohos_prebuilt_shared_library("libge2d") {
+  if (target_cpu == "arm") {
+    source = "lib/libge2d.z.so"
+  } else if (target_cpu == "arm64") {
+    source = "lib64/libge2d.z.so"
+  }
+  install_enable = true
+  install_images = [ "vendor" ]
+
+  part_name = "amlogic_products"
+  public_configs = [ ":ge2d-common_config" ]
+}
+
+group("ge2d") {
+  deps = [
+    ":libge2d",
+  ]
+}

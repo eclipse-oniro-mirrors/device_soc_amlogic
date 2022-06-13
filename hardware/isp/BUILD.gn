@@ -1,0 +1,108 @@
+# Copyright (c) 2021 Unionman Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+
+# ISP
+ohos_prebuilt_executable("iv009_isp") {
+  if (target_cpu == "arm") {
+    source = "bin/iv009_isp"
+  } else {
+    source = "bin64/iv009_isp"
+  }
+  install_images = [ chipset_base_dir ]
+  part_name = "amlogic_products"
+  install_enable = true
+}
+
+ohos_prebuilt_etc("libc.so.6") {
+  source = "lib/libc.so.6"
+  module_install_dir = "lib/glibc"
+  install_images = [ "vendor" ]
+
+  part_name = "amlogic_products"
+  install_enable = true
+}
+
+ohos_prebuilt_etc("libdl.so.2") {
+  source = "lib/libdl.so.2"
+  module_install_dir = "lib/glibc"
+  install_images = [ "vendor" ]
+
+  part_name = "amlogic_products"
+  install_enable = true
+}
+
+ohos_prebuilt_etc("libpthread.so.0") {
+  source = "lib/libpthread.so.0"
+  module_install_dir = "lib/glibc"
+  install_images = [ "vendor" ]
+
+  part_name = "amlogic_products"
+  install_enable = true
+}
+
+ohos_prebuilt_executable("ld-linux-armhf.so.3") {
+  source = "lib/ld-linux-armhf.so.3"
+  module_install_dir = "lib"
+  install_images = [ "system" ]
+
+  part_name = "amlogic_products"
+  install_enable = true
+}
+
+ohos_prebuilt_etc("iv009_isp.ko") {
+  source = "modules/iv009_isp.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "amlogic_products"
+}
+
+ohos_prebuilt_etc("iv009_isp_iq.ko") {
+  source = "modules/iv009_isp_iq.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "amlogic_products"
+}
+
+ohos_prebuilt_etc("iv009_isp_lens.ko") {
+  source = "modules/iv009_isp_lens.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "amlogic_products"
+}
+
+ohos_prebuilt_etc("iv009_isp_sensor.ko") {
+  source = "modules/iv009_isp_sensor.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "amlogic_products"
+}
+
+group("isp") {
+  deps = [
+    ":iv009_isp",
+    ":libc.so.6",
+    ":libdl.so.2",
+    ":libpthread.so.0",
+    ":ld-linux-armhf.so.3",
+    ":iv009_isp.ko",
+    ":iv009_isp_iq.ko",
+    ":iv009_isp_lens.ko",
+    ":iv009_isp_sensor.ko",
+  ]
+}

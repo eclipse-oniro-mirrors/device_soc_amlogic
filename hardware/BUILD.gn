@@ -1,0 +1,13 @@
+# Copyright (C) 2021 Unionman Technology Co., Ltd. All rights reserved.
+
+import("//build/ohos.gni")
+
+group("hardware_group") {
+  deps = [
+    "ge2d:ge2d",
+    "gpu:gpu",
+    "isp:isp",
+    "media:media",
+    "vpcodec:vpcodec",
+  ]
+}
