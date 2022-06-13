@@ -54,7 +54,7 @@ ohos_prebuilt_etc("libpthread.so.0") {
 
 ohos_prebuilt_executable("ld-linux-armhf.so.3") {
   source = "lib/ld-linux-armhf.so.3"
-  module_install_dir = "lib"
+  module_install_dir = "bin"
   install_images = [ "system" ]
 
   part_name = "amlogic_products"
