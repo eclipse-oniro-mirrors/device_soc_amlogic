@@ -255,12 +255,14 @@ static void BlitGe2dOpt(enum GE2DOP opMode, GfxOpt *opt)
 
     DISPLAY_LOGD("opMode: %{public}d", opMode);
     if (blendMode != GE2D_BLEND_MODE_INVALID) {
-       opMode = GE2D_OP_BLEND;
+        opMode = GE2D_OP_BLEND;
     }
+
     g_ge2d.ge2dinfo.ge2d_op = opMode;
     if (GE2D_OP_BLEND != opMode) {
         blendMode = GE2D_BLEND_MODE_NONE;
     }
+
     g_ge2d.ge2dinfo.blend_mode = blendMode;
     g_ge2d.ge2dinfo.src_info[0].plane_number = 1;
     g_ge2d.ge2dinfo.src_info[0].layer_mode = GE2D_LAYER_MODE_NON;
