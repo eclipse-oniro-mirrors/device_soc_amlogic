@@ -6,7 +6,7 @@
 
 #### 约束
 
-目前支持amlogi a311d
+目前支持a311d
 
 #### 对应仓库
 
@@ -16,3 +16,9 @@
 4.  device_soc_amlogic/hardware/isp
 5.  device_soc_amlogic/hardware/media
 6.  device_soc_amlogic/hardware/vpcodec
+
+#### 相关仓库
+
+* [vendor_unionman](https://gitee.com/openharmony-sig/vendor_unionman)
+
+* [device_board_unionman](https://gitee.com/openharmony-sig/device_board_unionman)
