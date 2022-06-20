@@ -67,7 +67,9 @@ ohos_shared_library("display_gralloc") {
   ]
 
   external_deps = [
+    "hdf_core:libhdf_utils",
     "hiviewdfx_hilog_native:libhilog",
+    "utils_base:utils",
   ]
 
   install_enable = true
@@ -153,8 +155,10 @@ ohos_shared_library("display_device") {
   ]
   cflags = [ "-Wno-unused-function" ]
   external_deps = [
+    "hdf_core:libhdf_utils",
     "hitrace_native:hitrace_meter",
     "hiviewdfx_hilog_native:libhilog",
+    "utils_base:utils",
   ]
 
   install_enable = true
