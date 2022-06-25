@@ -25,8 +25,8 @@ ohos_prebuilt_shared_library("libvpcodec") {
   part_name = "amlogic_products"
 }
 
-group("vpcodec") {
+group("media") {
   deps = [
-    ":libvpcodec",
+    "modules:media_modules",
   ]
 }

@@ -10,12 +10,11 @@
 
 #### 对应仓库
 
-1.  device_soc_amlogic/hardware/display
-2.  device_soc_amlogic/hardware/ge2d
-3.  device_soc_amlogic/hardware/gpu
-4.  device_soc_amlogic/hardware/isp
-5.  device_soc_amlogic/hardware/media
-6.  device_soc_amlogic/hardware/vpcodec
+1.  device_soc_amlogic/a311d/hardware/display
+2.  device_soc_amlogic/a311d/hardware/ge2d
+3.  device_soc_amlogic/a311d/hardware/gpu
+4.  device_soc_amlogic/a311d/hardware/isp
+5.  device_soc_amlogic/a311d/hardware/media
 
 #### 相关仓库
 

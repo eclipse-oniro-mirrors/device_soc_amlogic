@@ -89,7 +89,7 @@ ohos_shared_library("display_gfx") {
     "//utils/native/base/include",
     "//foundation/graphic/standard/utils/include",
     "//base/hiviewdfx/interfaces/innerkits/libhilog/include",
-    "//device/soc/amlogic/hardware/ge2d/include",
+    "//device/soc/amlogic/a311d/hardware/ge2d/include",
   ]
   output_name = "display_gfx"
   cflags = [
@@ -98,7 +98,7 @@ ohos_shared_library("display_gfx") {
   deps = [
     ":display_gralloc",
     "//utils/native/base:utils",
-    "//device/soc/amlogic/hardware/ge2d:libge2d",
+    "//device/soc/amlogic/a311d/hardware/ge2d:libge2d",
   ]
 
   external_deps = [ "hiviewdfx_hilog_native:libhilog" ]

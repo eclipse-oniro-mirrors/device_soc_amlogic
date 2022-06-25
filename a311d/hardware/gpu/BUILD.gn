@@ -120,8 +120,8 @@ ohos_prebuilt_etc("panfrost.ko") {
 group("gpu") {
   deps = [
     ":libgallium_dri.so",
-    ":gpu-sched.ko",
-    ":panfrost.ko",
     ":mesa3d-panforst-ohos",
+    # ":gpu-sched.ko",
+    # ":panfrost.ko",
   ]
 }
