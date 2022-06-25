@@ -26,7 +26,6 @@
 #include <securec.h>
 #include <linux/dma-buf.h>
 #include "drm_fourcc.h"
-#include "hisilicon_drm.h"
 #include "hi_gbm.h"
 #include "hdf_dlist.h"
 #include "display_gralloc_private.h"
