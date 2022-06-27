@@ -39,6 +39,7 @@
                 <filteritem type="filepath" name="a311d/hardware/media/lib/libvpcodec.z.so" desc="media firmware"/>
                 <filteritem type="filepath" name="a311d/hardware/isp/bin/.*" desc="isp bin file"/>
                 <filteritem type="filepath" name="a311d/hardware/ge2d/lib/.*" desc="so file"/>
+                <filteritem type="filename" name="*.png|*.jpg" desc="jpg file"/>
             </filefilter>
         </filefilterlist>
         <licensematcherlist>
