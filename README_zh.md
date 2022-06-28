@@ -2,7 +2,7 @@
 
 #### 简介
 
-本仓库下实现了Amlogic芯片系列的display hdi的实现。其中ge2d为芯片平台支持的特性，用于辅助display进行硬件合成及图形处理加速。gpu用于硬件合成渲染显示。isp专用于平台的图像处理，实现Auto Exposure/Auto Focus/Auto White Balance，并配合media模块的进行图像的编解码。本库相关代码可直接复用于Amlogic芯片系列的产品。
+本仓库下实现了Amlogic芯片系列的display hdi(Hardware Driver Interfaces)。其中ge2d为芯片平台支持的特性，用于辅助display进行硬件合成及图形处理加速。gpu用于硬件合成渲染显示。isp专用于平台的图像处理，实现Auto Exposure/Auto Focus/Auto White Balance，并配合media模块的进行图像的编解码。本库相关代码可直接复用于Amlogic芯片系列的产品。
 
 #### 约束
 
