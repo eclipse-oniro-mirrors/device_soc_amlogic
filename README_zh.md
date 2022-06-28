@@ -2,24 +2,28 @@
 
 #### 简介
 
-本仓用于放置amlogic soc相关内容，包含媒体编解码及display南向接口实现、框架及对接层库目录。
+本仓库下实现了Amlogic芯片系列的display hdi的实现。其中ge2d为芯片平台支持的特性，用于辅助display进行硬件合成及图形处理加速。gpu用于硬件合成渲染显示。isp专用于平台的图像处理，实现Auto Exposure/Auto Focus/Auto White Balance，并配合media模块的进行图像的编解码。本库相关代码可直接复用于Amlogic芯片系列的产品。
 
 #### 约束
 
-目前支持amlogic a311d
+目前支持的芯片系列
 
-#### 软件框架
+| 芯片厂商    | 主芯片型号 | GPU型号    |
+| ------- | ----- | -------- |
+| Amlogic | A311D | Mali-G52 |
+
+#### 目录
 
 ```
 device/soc/amlogic
-├── a311d                 # A311D芯片平台
+├── a311d                 # A311D芯片目录
 │   ├── hardware
 │   │   ├── BUILD.gn
-│   │   ├── display       # display hdi实现
-│   │   ├── ge2d          # 2D加速模块
-│   │   ├── gpu           # GPU相关
-│   │   ├── isp           # 图像处理相关服务
-│   │   └── media         # 媒体编解码库
+│   │   ├── display       # display hdi实现目录
+│   │   ├── ge2d          # 2D加速模块目录
+│   │   ├── gpu           # GPU库目录
+│   │   ├── isp           # 图像处理相关和依赖库目录
+│   │   └── media         # 媒体编解码库目录
 │   └── soc.gni
 ├── common                # amlogic芯片平台公共目录
 │   └── hal
