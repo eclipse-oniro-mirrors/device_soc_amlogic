@@ -28,5 +28,6 @@ ohos_prebuilt_shared_library("libvpcodec") {
 group("media") {
   deps = [
     "modules:media_modules",
+    "firmware:media_firmware",
   ]
 }
