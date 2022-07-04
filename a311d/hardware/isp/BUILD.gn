@@ -25,6 +25,42 @@ ohos_prebuilt_executable("iv009_isp") {
   install_enable = true
 }
 
+ohos_prebuilt_etc("libc.so.6") {
+  source = "lib/libc.so.6"
+  module_install_dir = "lib/glibc"
+  install_images = [ "vendor" ]
+
+  part_name = "amlogic_products"
+  install_enable = true
+}
+
+ohos_prebuilt_etc("libdl.so.2") {
+  source = "lib/libdl.so.2"
+  module_install_dir = "lib/glibc"
+  install_images = [ "vendor" ]
+
+  part_name = "amlogic_products"
+  install_enable = true
+}
+
+ohos_prebuilt_etc("libpthread.so.0") {
+  source = "lib/libpthread.so.0"
+  module_install_dir = "lib/glibc"
+  install_images = [ "vendor" ]
+
+  part_name = "amlogic_products"
+  install_enable = true
+}
+
+ohos_prebuilt_executable("ld-linux-armhf.so.3") {
+  source = "lib/ld-linux-armhf.so.3"
+  module_install_dir = "bin"
+  install_images = [ "system" ]
+
+  part_name = "amlogic_products"
+  install_enable = true
+}
+
 ohos_prebuilt_etc("iv009_isp.ko") {
   source = "modules/iv009_isp.ko"
   module_install_dir = "modules"
@@ -60,6 +96,10 @@ ohos_prebuilt_etc("iv009_isp_sensor.ko") {
 group("isp") {
   deps = [
     ":iv009_isp",
+    ":libc.so.6",
+    ":libdl.so.2",
+    ":libpthread.so.0",
+    ":ld-linux-armhf.so.3",
     ":iv009_isp.ko",
     ":iv009_isp_iq.ko",
     ":iv009_isp_lens.ko",
