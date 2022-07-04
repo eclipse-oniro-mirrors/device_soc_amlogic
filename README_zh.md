@@ -1,10 +1,10 @@
 # device_soc_amlogic
 
-#### 简介
+## 介绍
 
 本仓库下实现了Amlogic芯片系列的display hdi(Hardware Driver Interfaces)。其中ge2d为芯片平台支持的特性，用于辅助display进行硬件合成及图形处理加速。gpu用于硬件合成渲染显示。isp专用于平台的图像处理，实现Auto Exposure/Auto Focus/Auto White Balance，并配合media模块的进行图像的编解码。本库相关代码可直接复用于Amlogic芯片系列的产品。
 
-#### 约束
+## 约束
 
 目前支持的芯片系列
 
@@ -12,7 +12,7 @@
 | ------- | ----- | -------- |
 | Amlogic | A311D | Mali-G52 |
 
-#### 目录
+## 目录
 
 ```
 device/soc/amlogic
@@ -33,7 +33,7 @@ device/soc/amlogic
 └── README_zh.md
 ```
 
-#### 相关仓库
+## 相关仓库
 
 - device_soc_amlogic
 
