@@ -18,7 +18,11 @@ config("mesa3d-common_config") {
 }
 
 ohos_prebuilt_shared_library("libgbm.so.1") {
-  source = "lib/libgbm.so.1"
+  if (target_cpu == "arm") {
+    source = "lib/libgbm.so.1"
+  } else if (target_cpu == "arm64") {
+    source = "lib64/libgbm.so.1"
+  }
   install_images = [ chipset_base_dir ]
   relative_install_dir = "chipsetsdk"
   subsystem_name = "amlogic_products"
@@ -28,12 +32,16 @@ ohos_prebuilt_shared_library("libgbm.so.1") {
 }
 
 ohos_prebuilt_shared_library("libEGL.so.1") {
-  source = "lib/libEGL.so.1"
+  if (target_cpu == "arm") {
+    source = "lib/libEGL.so.1"
+  } else if (target_cpu == "arm64") {
+    source = "lib64/libEGL.so.1"
+  }
   install_images = [ chipset_base_dir ]
   relative_install_dir = "chipsetsdk"
   symlink_target_name = [
     "libEGL.so",
-    "libmali.so.0",
+    "libEGL_impl.so",
   ]
   subsystem_name = "amlogic_products"
   part_name = "amlogic_products"
@@ -42,7 +50,11 @@ ohos_prebuilt_shared_library("libEGL.so.1") {
 }
 
 ohos_prebuilt_shared_library("libglapi.so.0") {
-  source = "lib/libglapi.so.0"
+  if (target_cpu == "arm") {
+    source = "lib/libglapi.so.0"
+  } else if (target_cpu == "arm64") {
+    source = "lib64/libglapi.so.0"
+  }
   install_images = [ chipset_base_dir ]
   relative_install_dir = "chipsetsdk"
   subsystem_name = "amlogic_products"
@@ -52,11 +64,16 @@ ohos_prebuilt_shared_library("libglapi.so.0") {
 }
 
 ohos_prebuilt_shared_library("libGLESv1_CM.so.1") {
-  source = "lib/libGLESv1_CM.so.1"
+  if (target_cpu == "arm") {
+    source = "lib/libGLESv1_CM.so.1"
+  } else if (target_cpu == "arm64") {
+    source = "lib64/libGLESv1_CM.so.1"
+  }
   install_images = [ chipset_base_dir ]
   relative_install_dir = "chipsetsdk"
   symlink_target_name = [
-    "libGLESv1.so"
+    "libGLESv1.so",
+    "libGLESv1_impl.so",
   ]
   subsystem_name = "amlogic_products"
   part_name = "amlogic_products"
@@ -65,12 +82,18 @@ ohos_prebuilt_shared_library("libGLESv1_CM.so.1") {
 }
 
 ohos_prebuilt_shared_library("libGLESv2.so.2") {
-  source = "lib/libGLESv2.so.2"
+  if (target_cpu == "arm") {
+    source = "lib/libGLESv2.so.2"
+  } else if (target_cpu == "arm64") {
+    source = "lib64/libGLESv2.so.2"
+  }
   install_images = [ chipset_base_dir ]
   relative_install_dir = "chipsetsdk"
   symlink_target_name = [
     "libGLESv2.so",
+    "libGLESv2_impl.so",
     "libGLESv3.so",
+    "libGLESv3_impl.so",
   ]
   subsystem_name = "amlogic_products"
   part_name = "amlogic_products"
@@ -80,16 +103,20 @@ ohos_prebuilt_shared_library("libGLESv2.so.2") {
 
 group("mesa3d-panforst-ohos") {
   deps = [
-    ":libgbm.so.1",
     ":libEGL.so.1",
-    ":libglapi.so.0",
     ":libGLESv1_CM.so.1",
     ":libGLESv2.so.2",
+    ":libgbm.so.1",
+    ":libglapi.so.0",
   ]
 }
 
 ohos_prebuilt_shared_library("libgallium_dri.so") {
-  source = "lib/libgallium_dri.so"
+  if (target_cpu == "arm") {
+    source = "lib/libgallium_dri.so"
+  } else if (target_cpu == "arm64") {
+    source = "lib64/libgallium_dri.so"
+  }
   install_enable = true
   install_images = [ chipset_base_dir ]
   relative_install_dir = "chipsetsdk"
@@ -119,9 +146,9 @@ ohos_prebuilt_etc("panfrost.ko") {
 
 group("gpu") {
   deps = [
+    ":gpu-sched.ko",
     ":libgallium_dri.so",
     ":mesa3d-panforst-ohos",
-    # ":gpu-sched.ko",
-    # ":panfrost.ko",
+    ":panfrost.ko",
   ]
 }
