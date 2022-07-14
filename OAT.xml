@@ -36,14 +36,19 @@
             </filefilter>
             <filefilter name="binaryFileTypePolicyFilter" desc="Filters for binary file policies">
                 <filteritem type="filepath" name="a311d/hardware/gpu/lib/.*" desc="gpu 32bit libs file"/>
+                <filteritem type="filepath" name="a311d/hardware/gpu/lib64/.*" desc="gpu 64bit libs file"/>
                 <filteritem type="filepath" name="a311d/hardware/gpu/modules/.*" desc="gpu modules file"/>
                 <filteritem type="filepath" name="a311d/hardware/media/firmware/.*" desc="media firmware"/>
-                <filteritem type="filepath" name="a311d/hardware/media/lib/libvpcodec.z.so" desc="media firmware"/>
+                <filteritem type="filepath" name="a311d/hardware/media/lib/libvpcodec.z.so" desc="media venc lib"/>
+                 <filteritem type="filepath" name="a311d/hardware/media/lib64/libvpcodec.z.so" desc="media 64bit venc lib"/>
                 <filteritem type="filepath" name="a311d/hardware/isp/bin/.*" desc="isp bin file"/>
+                <filteritem type="filepath" name="a311d/hardware/isp/bin64/.*" desc="isp 64bit bin file"/>
                 <filteritem type="filepath" name="a311d/hardware/isp/lib/.*" desc="isp lib file"/>
+                <filteritem type="filepath" name="a311d/hardware/isp/lib64/.*" desc="isp 64bit lib file"/>
                 <filteritem type="filepath" name="a311d/hardware/isp/modules/.*" desc="isp modules file"/>
                 <filteritem type="filepath" name="a311d/hardware/media/modules/.*" desc="media modules file"/>
-                <filteritem type="filepath" name="a311d/hardware/ge2d/lib/.*" desc="so file"/>
+                <filteritem type="filepath" name="a311d/hardware/ge2d/lib/.*" desc="ge2d so file"/>
+                <filteritem type="filepath" name="a311d/hardware/ge2d/lib64/.*" desc="ge2d 64bit so file"/>
                 <filteritem type="filename" name="*.png|*.jpg" desc="jpg file"/>
             </filefilter>
         </filefilterlist>
