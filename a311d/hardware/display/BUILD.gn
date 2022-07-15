@@ -18,6 +18,7 @@ group("display_group") {
     ":display_device",
     ":display_gfx",
     ":display_gralloc",
+    ":display_layer",
     ":higbm",
   ]
 }
@@ -92,13 +93,11 @@ ohos_shared_library("display_gfx") {
     "//device/soc/amlogic/a311d/hardware/ge2d/include",
   ]
   output_name = "display_gfx"
-  cflags = [
-    "-Wno-macro-redefined"
-  ]
+  cflags = [ "-Wno-macro-redefined" ]
   deps = [
     ":display_gralloc",
-    "//utils/native/base:utils",
     "//device/soc/amlogic/a311d/hardware/ge2d:libge2d",
+    "//utils/native/base:utils",
   ]
 
   external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
@@ -118,18 +117,18 @@ ohos_shared_library("display_device") {
     "src/display_device/drm_encoder.cpp",
     "src/display_device/drm_plane.cpp",
     "src/display_device/drm_vsync_worker.cpp",
+    "src/display_device/fb_composition.cpp",
+    "src/display_device/fb_device.cpp",
+    "src/display_device/fb_display.cpp",
     "src/display_device/hdi_composer.cpp",
     "src/display_device/hdi_device_interface.cpp",
     "src/display_device/hdi_display.cpp",
     "src/display_device/hdi_drm_composition.cpp",
     "src/display_device/hdi_drm_layer.cpp",
     "src/display_device/hdi_gfx_composition.cpp",
-    "src/display_device/hdi_video_composition.cpp",
     "src/display_device/hdi_layer.cpp",
     "src/display_device/hdi_session.cpp",
-    "src/display_device/fb_composition.cpp",
-    "src/display_device/fb_device.cpp",
-    "src/display_device/fb_display.cpp",
+    "src/display_device/hdi_video_composition.cpp",
     "src/display_device/sorft_vsync.cpp",
     "src/utils/display_adapter.cpp",
   ]
@@ -167,11 +166,38 @@ ohos_shared_library("display_device") {
   part_name = "drivers_peripheral_display"
 }
 
-group("display_layer") {
-  deps = [
-    ":display_device",
-    ":display_gfx",
-    ":display_gralloc",
-    ":higbm",
+ohos_shared_library("display_layer") {
+  output_name = "display_layer"
+  sources = [
+    "//drivers/peripheral/display/hal/disp_hal.c",
+    "src/display_layer/display_layer.c",
   ]
+  include_dirs = [
+    "include",
+    "//drivers/peripheral/display/hal",
+    "//drivers/peripheral/display/interfaces/include",
+    "//base/hiviewdfx/hilog_lite/interfaces/native/innerkits",
+    "//drivers/peripheral/base",
+  ]
+  deps = [ "//third_party/bounds_checking_function:libsec_shared" ]
+  external_deps = [
+    "hdf_core:libhdf_utils",
+    "hiviewdfx_hilog_native:libhilog",
+    "utils_base:utils",
+  ]
+  defines = [ "__USER__" ]
+  cflags = [
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-fsigned-char",
+    "-fno-common",
+    "-fno-strict-aliasing",
+    "-Wno-format",
+    "-Wno-format-extra-args",
+  ]
+  install_enable = true
+  install_images = [ chipset_base_dir ]
+  subsystem_name = "hdf"
+  part_name = "drivers_peripheral_display"
 }
