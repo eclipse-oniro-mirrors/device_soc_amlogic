@@ -18,7 +18,6 @@ group("display_group") {
     ":display_device",
     ":display_gfx",
     ":display_gralloc",
-    ":display_layer",
     ":higbm",
   ]
 }
@@ -160,42 +159,8 @@ ohos_shared_library("display_device") {
     "utils_base:utils",
   ]
 
-  install_enable = true
-  install_images = [ chipset_base_dir ]
-  subsystem_name = "hdf"
-  part_name = "drivers_peripheral_display"
-}
+  symlink_target_name = [ "libdisplay_layer.z.so" ]
 
-ohos_shared_library("display_layer") {
-  output_name = "display_layer"
-  sources = [
-    "//drivers/peripheral/display/hal/disp_hal.c",
-    "src/display_layer/display_layer.c",
-  ]
-  include_dirs = [
-    "include",
-    "//drivers/peripheral/display/hal",
-    "//drivers/peripheral/display/interfaces/include",
-    "//base/hiviewdfx/hilog_lite/interfaces/native/innerkits",
-    "//drivers/peripheral/base",
-  ]
-  deps = [ "//third_party/bounds_checking_function:libsec_shared" ]
-  external_deps = [
-    "hdf_core:libhdf_utils",
-    "hiviewdfx_hilog_native:libhilog",
-    "utils_base:utils",
-  ]
-  defines = [ "__USER__" ]
-  cflags = [
-    "-Wall",
-    "-Wextra",
-    "-Werror",
-    "-fsigned-char",
-    "-fno-common",
-    "-fno-strict-aliasing",
-    "-Wno-format",
-    "-Wno-format-extra-args",
-  ]
   install_enable = true
   install_images = [ chipset_base_dir ]
   subsystem_name = "hdf"
