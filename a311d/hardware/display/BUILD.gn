@@ -166,3 +166,12 @@ ohos_shared_library("display_device") {
   subsystem_name = "hdf"
   part_name = "drivers_peripheral_display"
 }
+
+group("display_layer") {
+  deps = [
+    ":display_device",
+    ":display_gfx",
+    ":display_gralloc",
+    ":higbm",
+  ]
+}
