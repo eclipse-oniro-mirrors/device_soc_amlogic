@@ -21,7 +21,7 @@ ohos_prebuilt_executable("iv009_isp") {
     source = "bin64/iv009_isp"
   }
   install_images = [ chipset_base_dir ]
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_camera"
   install_enable = true
 }
 
@@ -30,7 +30,7 @@ ohos_prebuilt_etc("libc.so.6") {
   module_install_dir = "lib/glibc"
   install_images = [ "vendor" ]
 
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_camera"
   install_enable = true
 }
 
@@ -39,7 +39,7 @@ ohos_prebuilt_etc("libdl.so.2") {
   module_install_dir = "lib/glibc"
   install_images = [ "vendor" ]
 
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_camera"
   install_enable = true
 }
 
@@ -48,7 +48,7 @@ ohos_prebuilt_etc("libpthread.so.0") {
   module_install_dir = "lib/glibc"
   install_images = [ "vendor" ]
 
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_camera"
   install_enable = true
 }
 
@@ -57,7 +57,7 @@ ohos_prebuilt_executable("ld-linux-armhf.so.3") {
   module_install_dir = "bin"
   install_images = [ "system" ]
 
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_camera"
   install_enable = true
 }
 
@@ -66,7 +66,7 @@ ohos_prebuilt_etc("iv009_isp.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_camera"
 }
 
 ohos_prebuilt_etc("iv009_isp_iq.ko") {
@@ -74,7 +74,7 @@ ohos_prebuilt_etc("iv009_isp_iq.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_camera"
 }
 
 ohos_prebuilt_etc("iv009_isp_lens.ko") {
@@ -82,7 +82,7 @@ ohos_prebuilt_etc("iv009_isp_lens.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_camera"
 }
 
 ohos_prebuilt_etc("iv009_isp_sensor.ko") {
@@ -90,19 +90,19 @@ ohos_prebuilt_etc("iv009_isp_sensor.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_camera"
 }
 
 group("isp") {
   deps = [
     ":iv009_isp",
-    ":libc.so.6",
-    ":libdl.so.2",
-    ":libpthread.so.0",
-    ":ld-linux-armhf.so.3",
     ":iv009_isp.ko",
     ":iv009_isp_iq.ko",
     ":iv009_isp_lens.ko",
     ":iv009_isp_sensor.ko",
+    ":ld-linux-armhf.so.3",
+    ":libc.so.6",
+    ":libdl.so.2",
+    ":libpthread.so.0",
   ]
 }

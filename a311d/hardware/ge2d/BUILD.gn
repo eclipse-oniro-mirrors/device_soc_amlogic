@@ -27,12 +27,10 @@ ohos_prebuilt_shared_library("libge2d") {
   install_enable = true
   install_images = [ "vendor" ]
 
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_display"
   public_configs = [ ":ge2d-common_config" ]
 }
 
 group("ge2d") {
-  deps = [
-    ":libge2d",
-  ]
+  deps = [ ":libge2d" ]
 }
