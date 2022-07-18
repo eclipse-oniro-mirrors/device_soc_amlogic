@@ -25,8 +25,8 @@ ohos_prebuilt_shared_library("libgbm.so.1") {
   }
   install_images = [ chipset_base_dir ]
   relative_install_dir = "chipsetsdk"
-  subsystem_name = "amlogic_products"
-  part_name = "amlogic_products"
+  subsystem_name = "hdf"
+  part_name = "drivers_peripheral_display"
   install_enable = true
   public_configs = [ ":mesa3d-common_config" ]
 }
@@ -43,8 +43,8 @@ ohos_prebuilt_shared_library("libEGL.so.1") {
     "libEGL.so",
     "libEGL_impl.so",
   ]
-  subsystem_name = "amlogic_products"
-  part_name = "amlogic_products"
+  subsystem_name = "hdf"
+  part_name = "drivers_peripheral_display"
   install_enable = true
   public_configs = [ ":mesa3d-common_config" ]
 }
@@ -57,8 +57,8 @@ ohos_prebuilt_shared_library("libglapi.so.0") {
   }
   install_images = [ chipset_base_dir ]
   relative_install_dir = "chipsetsdk"
-  subsystem_name = "amlogic_products"
-  part_name = "amlogic_products"
+  subsystem_name = "hdf"
+  part_name = "drivers_peripheral_display"
   install_enable = true
   public_configs = [ ":mesa3d-common_config" ]
 }
@@ -75,8 +75,8 @@ ohos_prebuilt_shared_library("libGLESv1_CM.so.1") {
     "libGLESv1.so",
     "libGLESv1_impl.so",
   ]
-  subsystem_name = "amlogic_products"
-  part_name = "amlogic_products"
+  subsystem_name = "hdf"
+  part_name = "drivers_peripheral_display"
   install_enable = true
   public_configs = [ ":mesa3d-common_config" ]
 }
@@ -95,8 +95,8 @@ ohos_prebuilt_shared_library("libGLESv2.so.2") {
     "libGLESv3.so",
     "libGLESv3_impl.so",
   ]
-  subsystem_name = "amlogic_products"
-  part_name = "amlogic_products"
+  subsystem_name = "hdf"
+  part_name = "drivers_peripheral_display"
   install_enable = true
   public_configs = [ ":mesa3d-common_config" ]
 }
@@ -124,8 +124,8 @@ ohos_prebuilt_shared_library("libgallium_dri.so") {
     "panfrost_dri.so",
     "meson_dri.so",
   ]
-  subsystem_name = "amlogic_products"
-  part_name = "amlogic_products"
+  subsystem_name = "hdf"
+  part_name = "drivers_peripheral_display"
 }
 
 ohos_prebuilt_etc("gpu-sched.ko") {
@@ -133,7 +133,7 @@ ohos_prebuilt_etc("gpu-sched.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_display"
 }
 
 ohos_prebuilt_etc("panfrost.ko") {
@@ -141,7 +141,7 @@ ohos_prebuilt_etc("panfrost.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_display"
 }
 
 group("gpu") {

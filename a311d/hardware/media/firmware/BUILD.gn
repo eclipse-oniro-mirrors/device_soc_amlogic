@@ -18,7 +18,7 @@ ohos_prebuilt_etc("h264_enc_bin") {
   module_install_dir = "lib/firmware/video"
   install_images = [ "system" ]
 
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_codec"
 }
 
 ohos_prebuilt_etc("video_ucode_bin") {
@@ -26,7 +26,7 @@ ohos_prebuilt_etc("video_ucode_bin") {
   module_install_dir = "lib/firmware/video"
   install_images = [ "system" ]
 
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_codec"
 }
 
 group("media_firmware") {

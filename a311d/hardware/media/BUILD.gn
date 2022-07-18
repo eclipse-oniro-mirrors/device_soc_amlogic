@@ -22,7 +22,7 @@ ohos_prebuilt_shared_library("libvpcodec") {
   }
   install_enable = true
   install_images = [ "vendor" ]
-  part_name = "amlogic_products"
+  part_name = "drivers_peripheral_codec"
 }
 
 group("media") {
