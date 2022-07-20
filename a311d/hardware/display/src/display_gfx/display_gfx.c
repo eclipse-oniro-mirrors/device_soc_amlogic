@@ -263,54 +263,80 @@ static void BlitGe2dOpt(enum GE2DOP opMode, GfxOpt *opt)
         blendMode = GE2D_BLEND_MODE_NONE;
     }
 
+    g_ge2d.ge2dinfo.ge2d_op = opMode;
     g_ge2d.ge2dinfo.blend_mode = blendMode;
-    g_ge2d.ge2dinfo.src_info[0].plane_number = 1;
-    g_ge2d.ge2dinfo.src_info[0].layer_mode = GE2D_LAYER_MODE_NON;
-    g_ge2d.ge2dinfo.src_info[0].memtype = GE2D_CANVAS_ALLOC;
-    g_ge2d.ge2dinfo.src_info[1].memtype = GE2D_CANVAS_TYPE_INVALID;
-    g_ge2d.ge2dinfo.src_info[0].mem_alloc_type = GE2D_MEM_DMABUF;
-    g_ge2d.ge2dinfo.src_info[1].mem_alloc_type = GE2D_MEM_DMABUF;
-
-    g_ge2d.ge2dinfo.dst_info.mem_alloc_type = GE2D_MEM_DMABUF;
-    g_ge2d.ge2dinfo.dst_info.memtype = GE2D_CANVAS_ALLOC;
-    g_ge2d.ge2dinfo.dst_info.plane_number = 1;
     g_ge2d.ge2dinfo.dst_info.rotation = rotation;
-
     g_ge2d.ge2dinfo.gl_alpha = globalAlpha;
 
     return ;
 }
 
-static void BlitGe2dSurface(ISurface *srcSurface, ISurface *dstSurface)
+static int32_t BlitGe2dNoAlpha(ISurface *srcSurface, IRect sRect, ISurface *dstSurface, IRect dRect)
 {
+    int32_t ret = DISPLAY_SUCCESS;
+
+    g_ge2d.ge2dinfo.src_info[0].plane_number = 1;
     g_ge2d.ge2dinfo.src_info[0].plane_alpha = srcSurface->alpha0;
+    g_ge2d.ge2dinfo.src_info[0].memtype = GE2D_CANVAS_ALLOC;
+    g_ge2d.ge2dinfo.src_info[0].mem_alloc_type = GE2D_MEM_DMABUF;
+    g_ge2d.ge2dinfo.src_info[0].layer_mode = GE2D_LAYER_MODE_NON;
     g_ge2d.ge2dinfo.src_info[0].shared_fd[0] = (int32_t)srcSurface->phyAddr;
     g_ge2d.ge2dinfo.src_info[0].canvas_w = srcSurface->width;
     g_ge2d.ge2dinfo.src_info[0].canvas_h = srcSurface->height;
     g_ge2d.ge2dinfo.src_info[0].format = pixelFormatChange(srcSurface->enColorFmt);
-
-    g_ge2d.ge2dinfo.dst_info.shared_fd[0] = (int32_t)dstSurface->phyAddr;
-    g_ge2d.ge2dinfo.dst_info.plane_alpha = dstSurface->alpha0;
-    g_ge2d.ge2dinfo.dst_info.canvas_w = dstSurface->width;
-    g_ge2d.ge2dinfo.dst_info.canvas_h = dstSurface->height;
-    g_ge2d.ge2dinfo.dst_info.format = pixelFormatChange(dstSurface->enColorFmt);
-
-    return ;
-}
-
-static void BlitGe2dRect(IRect sRect, IRect dRect)
-{
     g_ge2d.ge2dinfo.src_info[0].rect.x = sRect.x;
     g_ge2d.ge2dinfo.src_info[0].rect.y = sRect.y;
     g_ge2d.ge2dinfo.src_info[0].rect.w = sRect.w;
     g_ge2d.ge2dinfo.src_info[0].rect.h = sRect.h;
 
+    g_ge2d.ge2dinfo.src_info[1].plane_number = 1;
+    g_ge2d.ge2dinfo.src_info[1].plane_alpha = dstSurface->alpha0;
+    g_ge2d.ge2dinfo.src_info[1].memtype = GE2D_CANVAS_ALLOC;
+    g_ge2d.ge2dinfo.src_info[1].mem_alloc_type = GE2D_MEM_DMABUF;
+    g_ge2d.ge2dinfo.src_info[1].layer_mode = GE2D_LAYER_MODE_NON;
+    g_ge2d.ge2dinfo.src_info[1].shared_fd[0] = (int32_t)dstSurface->phyAddr;
+    g_ge2d.ge2dinfo.src_info[1].canvas_w = dstSurface->width;
+    g_ge2d.ge2dinfo.src_info[1].canvas_h = dstSurface->height;
+    g_ge2d.ge2dinfo.src_info[1].format = pixelFormatChange(dstSurface->enColorFmt);
+    g_ge2d.ge2dinfo.src_info[1].rect.x = dRect.x;
+    g_ge2d.ge2dinfo.src_info[1].rect.y = dRect.y;
+    g_ge2d.ge2dinfo.src_info[1].rect.w = dRect.w;
+    g_ge2d.ge2dinfo.src_info[1].rect.h = dRect.h;
+
+    ret = aml_ge2d_process(&g_ge2d.ge2dinfo);
+    if (ret < 0) {
+        DISPLAY_LOGE("aml_ge2d_process failed. ret=%{bublic}d", ret);
+        return DISPLAY_FAILURE;
+    }
+
+    return DISPLAY_SUCCESS;
+}
+
+static int32_t BlitGe2dAlpha(ISurface *dstSurface, IRect dRect)
+{
+    int32_t ret = DISPLAY_SUCCESS;
+
+    g_ge2d.ge2dinfo.src_info[0].layer_mode = GE2D_LAYER_MODE_PREMULTIPLIED;
+    g_ge2d.ge2dinfo.dst_info.mem_alloc_type = GE2D_MEM_DMABUF;
+    g_ge2d.ge2dinfo.dst_info.memtype = GE2D_CANVAS_ALLOC;
+    g_ge2d.ge2dinfo.dst_info.shared_fd[0] = (int32_t)dstSurface->phyAddr;
+    g_ge2d.ge2dinfo.dst_info.plane_number = 1;
+    g_ge2d.ge2dinfo.dst_info.plane_alpha = dstSurface->alpha0;
+    g_ge2d.ge2dinfo.dst_info.canvas_w = dstSurface->width;
+    g_ge2d.ge2dinfo.dst_info.canvas_h = dstSurface->height;
+    g_ge2d.ge2dinfo.dst_info.format = pixelFormatChange(dstSurface->enColorFmt);
     g_ge2d.ge2dinfo.dst_info.rect.x = dRect.x;
     g_ge2d.ge2dinfo.dst_info.rect.y = dRect.y;
     g_ge2d.ge2dinfo.dst_info.rect.w = dRect.w;
     g_ge2d.ge2dinfo.dst_info.rect.h = dRect.h;
 
-    return ;
+    ret = aml_ge2d_process(&g_ge2d.ge2dinfo);
+    if (ret < 0) {
+        DISPLAY_LOGE("aml_ge2d_process failed. ret=%{bublic}d", ret);
+        return DISPLAY_FAILURE;
+    }
+
+    return DISPLAY_SUCCESS;
 }
 
 static int32_t Blit(ISurface *srcSurface, IRect *srcRect, ISurface *dstSurface, IRect *dstRect, GfxOpt *opt)
@@ -336,9 +362,6 @@ static int32_t Blit(ISurface *srcSurface, IRect *srcRect, ISurface *dstSurface, 
         sRect.h = srcSurface->height;
     }
 
-    DISPLAY_LOGD("Gfx srcSurface: fd %{public}d, w %{public}d, h %{publuc}d", \
-        (int32_t)srcSurface->phyAddr, srcSurface->width, srcSurface->height);
-
     if (dstRect != NULL) {
         dRect.x = dstRect->x;
         dRect.y = dstRect->y;
@@ -351,8 +374,8 @@ static int32_t Blit(ISurface *srcSurface, IRect *srcRect, ISurface *dstSurface, 
         dRect.h = dstSurface->height;
     }
 
-    DISPLAY_LOGD("Gfx dstSurface: fd %{public}d, w %{public}d, h %{publuc}d", \
-        (int32_t)dstSurface->phyAddr, dstSurface->width, dstSurface->height);
+    DISPLAY_LOGD("src: w %{public}d, h %{publuc}d, dst:w %{public}d, h %{publuc}d", \
+        srcSurface->width, srcSurface->height, dstSurface->width, dstSurface->height);
 
     if ((sRect.w != dRect.w) || (sRect.h != dRect.h)) {
         opMode = GE2D_OP_STRETCHBLIT;
@@ -361,12 +384,16 @@ static int32_t Blit(ISurface *srcSurface, IRect *srcRect, ISurface *dstSurface, 
     }
 
     BlitGe2dOpt(opMode, opt);
-    BlitGe2dRect(sRect, dRect);
-    BlitGe2dSurface(srcSurface, dstSurface);
 
-    ret = aml_ge2d_process(&g_ge2d.ge2dinfo);
+    ret = BlitGe2dNoAlpha(srcSurface, sRect, dstSurface, dRect);
     if (ret < 0) {
-        DISPLAY_LOGE("aml_ge2d_process failed. ret=%{bublic}d", ret);
+        DISPLAY_LOGE("BlitGe2dNoAlpha failed. ret=%{bublic}d", ret);
+        return DISPLAY_FAILURE;
+    }
+
+    ret = BlitGe2dAlpha(dstSurface, dRect);
+    if (ret < 0) {
+        DISPLAY_LOGE("BlitGe2dAlpha failed. ret=%{bublic}d", ret);
         return DISPLAY_FAILURE;
     }
 
