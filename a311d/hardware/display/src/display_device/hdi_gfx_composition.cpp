@@ -98,7 +98,7 @@ int32_t HdiGfxComposition::SetLayers(std::vector<HdiLayer *> &layers, HdiLayer &
         if (CanHandle(*layer)) {
             if ((layer->GetCompositionType() != COMPOSITION_VIDEO) &&
                 (layer->GetCompositionType() != COMPOSITION_CURSOR)) {
-                layer->SetDeviceSelect(COMPOSITION_CLIENT);
+                layer->SetDeviceSelect(COMPOSITION_DEVICE);
             } else {
                 layer->SetDeviceSelect(layer->GetCompositionType());
             }
