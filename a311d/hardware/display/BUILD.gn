@@ -32,8 +32,8 @@ ohos_static_library("higbm") {
   ]
   deps = [ "//third_party/libdrm:libdrm" ]
   external_deps = [
+    "c_utils:utils",
     "hiviewdfx_hilog_native:libhilog",
-    "utils_base:utils",
   ]
   subsystem_name = "hdf"
   part_name = "drivers_peripheral_display"
@@ -50,7 +50,7 @@ ohos_shared_library("display_gralloc") {
     "//drivers/peripheral/base",
     "//drivers/framework/include/utils",
     "//drivers/adapter/uhdf2/osal/include",
-    "//utils/native/base/include",
+    "//commonlibrary/c_utils/base/include",
     "//foundation/graphic/standard/utils/include",
     "//foundation/graphic/standard/prebuilts/librarys/drm/include",
     "//base/hiviewdfx/interfaces/innerkits/libhilog/include",
@@ -63,13 +63,12 @@ ohos_shared_library("display_gralloc") {
   deps = [
     ":higbm",
     "//third_party/libdrm:libdrm",
-    "//utils/native/base:utils",
   ]
 
   external_deps = [
+    "c_utils:utils",
     "hdf_core:libhdf_utils",
     "hiviewdfx_hilog_native:libhilog",
-    "utils_base:utils",
   ]
 
   install_enable = true
@@ -86,7 +85,7 @@ ohos_shared_library("display_gfx") {
     "//drivers/peripheral/base",
     "//drivers/framework/include/utils",
     "//drivers/adapter/uhdf2/adapter/osal/include/",
-    "//utils/native/base/include",
+    "//commonlibrary/c_utils/base/include",
     "//foundation/graphic/standard/utils/include",
     "//base/hiviewdfx/interfaces/innerkits/libhilog/include",
     "//device/soc/amlogic/a311d/hardware/ge2d/include",
@@ -96,10 +95,12 @@ ohos_shared_library("display_gfx") {
   deps = [
     ":display_gralloc",
     "//device/soc/amlogic/a311d/hardware/ge2d:libge2d",
-    "//utils/native/base:utils",
   ]
 
-  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+  external_deps = [
+    "c_utils:utils",
+    "hiviewdfx_hilog_native:libhilog",
+  ]
 
   install_enable = true
   install_images = [ chipset_base_dir ]
@@ -140,7 +141,7 @@ ohos_shared_library("display_device") {
     "//drivers/peripheral/base",
     "//drivers/framework/include/utils",
     "//drivers/adapter/uhdf2/osal/include",
-    "//utils/native/base/include",
+    "//commonlibrary/c_utils/base/include",
     "//foundation/graphic/standard/utils/include",
     "//foundation/graphic/standard/prebuilts/librarys/drm/include",
     "//base/hiviewdfx/interfaces/innerkits/libhilog/include",
@@ -149,14 +150,13 @@ ohos_shared_library("display_device") {
     ":display_gfx",
     ":display_gralloc",
     "//third_party/libdrm:libdrm",
-    "//utils/native/base:utils",
   ]
   cflags = [ "-Wno-unused-function" ]
   external_deps = [
+    "c_utils:utils",
     "hdf_core:libhdf_utils",
     "hitrace_native:hitrace_meter",
     "hiviewdfx_hilog_native:libhilog",
-    "utils_base:utils",
   ]
 
   symlink_target_name = [ "libdisplay_layer.z.so" ]
