@@ -1,0 +1,3 @@
+#ifndef DT_BINDINGS_G12A_CLKC_H
+#define DT_BINDINGS_G12A_CLKC_H
+#endif
