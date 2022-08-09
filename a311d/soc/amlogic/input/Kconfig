@@ -1,0 +1,10 @@
+#
+# Amlogic Input Module
+#
+menu "Amlogic Input Module"
+config  AMLOGIC_INPUT
+	bool "Amlogic Input Module"
+	default n
+	help
+		Select to enable Input.
+endmenu
