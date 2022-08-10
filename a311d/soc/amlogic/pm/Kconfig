@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Amlogic Power Management
+#
+
+config MESON_GX_PM
+	bool
+	default ARCH_MESON if ARM64
+	help
+	  Say y here to enable the Amlogic GX SoC Power Management
