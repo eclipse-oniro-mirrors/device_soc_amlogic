@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+config SND_SOC_ES7243
+	tristate "Everest Semi ES7243 CODEC"
+	depends on I2C
