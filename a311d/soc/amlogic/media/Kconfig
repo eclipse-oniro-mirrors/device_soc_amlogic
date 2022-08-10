@@ -1,0 +1,10 @@
+#
+# Amlogic Media Module
+#
+menu "Amlogic Media Module"
+config  AMLOGIC_MEDIA
+	bool "Amlogic Media Module"
+	default n
+	help
+		Select to enable Media.
+endmenu
