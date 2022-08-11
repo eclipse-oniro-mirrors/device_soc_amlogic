@@ -1,0 +1,37 @@
+#
+# Amlogic driver configuration
+#
+config AMLOGIC_DRIVER
+	bool "Amlogic Peripheral drivers"
+	default n
+	help
+		this option is provided for control amlogic
+		drivers, if you want to use amlogic driver
+		please open it
+
+config AMLOGIC_MODIFY
+	bool "Amlogic modify for kernel code"
+	default n
+	help
+		this option is set up for AMLOGIC modify of
+		standard kernel source code. All modify of kernel
+		standard code should be wrapped by this config
+
+if AMLOGIC_DRIVER
+menu "Amlogic Device Drivers"
+source "vendor/amlogic/codecs/Kconfig"
+source "vendor/amlogic/uart/Kconfig"
+source "vendor/amlogic/unifykey/Kconfig"
+source "vendor/amlogic/iomap/Kconfig"
+source "vendor/amlogic/phy/Kconfig"
+source "vendor/amlogic/pm/Kconfig"
+source "vendor/amlogic/secmon/Kconfig"
+source "vendor/amlogic/reboot/Kconfig"
+source "vendor/amlogic/cpu_version/Kconfig"
+source "vendor/amlogic/media/Kconfig"
+source "vendor/amlogic/ge2d/Kconfig"
+source "vendor/amlogic/canvas/Kconfig"
+source "vendor/amlogic/media/common/codec_mm/Kconfig"
+source "vendor/amlogic/input/Kconfig"
+endmenu
+endif
