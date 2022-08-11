@@ -22,7 +22,7 @@ ohos_prebuilt_shared_library("libvpcodec") {
   }
   install_enable = true
   install_images = [ "vendor" ]
-  part_name = "drivers_peripheral_codec"
+  part_name = "unionman_products"
 }
 
 group("media") {

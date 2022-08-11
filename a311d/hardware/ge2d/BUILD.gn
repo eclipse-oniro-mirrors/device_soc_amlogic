@@ -27,7 +27,7 @@ ohos_prebuilt_shared_library("libge2d") {
   install_enable = true
   install_images = [ "vendor" ]
 
-  part_name = "drivers_peripheral_display"
+  part_name = "unionman_products"
   public_configs = [ ":ge2d-common_config" ]
 }
 
