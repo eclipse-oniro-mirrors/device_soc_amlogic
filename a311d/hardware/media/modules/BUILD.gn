@@ -19,7 +19,7 @@ ohos_prebuilt_etc("videobuf2-dma-contig.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "drivers_peripheral_codec"
+  part_name = "unionman_products"
 }
 
 ohos_prebuilt_etc("v4l2-mem2mem.ko") {
@@ -27,7 +27,7 @@ ohos_prebuilt_etc("v4l2-mem2mem.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "drivers_peripheral_codec"
+  part_name = "unionman_products"
 }
 
 ohos_prebuilt_etc("meson-vdec.ko") {
@@ -35,7 +35,7 @@ ohos_prebuilt_etc("meson-vdec.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "drivers_peripheral_codec"
+  part_name = "unionman_products"
 }
 
 ohos_prebuilt_etc("registers.ko") {
@@ -43,7 +43,7 @@ ohos_prebuilt_etc("registers.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "drivers_peripheral_codec"
+  part_name = "unionman_products"
 }
 
 ohos_prebuilt_etc("media_clock.ko") {
@@ -51,7 +51,7 @@ ohos_prebuilt_etc("media_clock.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "drivers_peripheral_codec"
+  part_name = "unionman_products"
 }
 
 ohos_prebuilt_etc("firmware.ko") {
@@ -59,7 +59,7 @@ ohos_prebuilt_etc("firmware.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "drivers_peripheral_codec"
+  part_name = "unionman_products"
 }
 
 ohos_prebuilt_etc("decoder_common.ko") {
@@ -67,7 +67,7 @@ ohos_prebuilt_etc("decoder_common.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "drivers_peripheral_codec"
+  part_name = "unionman_products"
 }
 
 ohos_prebuilt_etc("encoder.ko") {
@@ -75,7 +75,7 @@ ohos_prebuilt_etc("encoder.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "drivers_peripheral_codec"
+  part_name = "unionman_products"
 }
 
 ohos_prebuilt_etc("jpegenc.ko") {
@@ -83,7 +83,7 @@ ohos_prebuilt_etc("jpegenc.ko") {
   module_install_dir = "modules"
   install_images = [ "vendor" ]
 
-  part_name = "drivers_peripheral_codec"
+  part_name = "unionman_products"
 }
 
 group("media_modules") {
