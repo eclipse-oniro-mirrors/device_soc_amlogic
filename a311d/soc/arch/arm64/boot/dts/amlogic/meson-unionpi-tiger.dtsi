@@ -1,0 +1,806 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright (c) 2022 Unionman Technology Co., Ltd.
+ * Copyright (c) 2019 BayLibre, SAS
+ * Author: Neil Armstrong <narmstrong@baylibre.com>
+ * Copyright (c) 2019 Christian Hewitt <christianshewitt@gmail.com>
+ */
+
+#include <dt-bindings/input/input.h>
+#include <dt-bindings/gpio/meson-g12a-gpio.h>
+#include <dt-bindings/sound/meson-g12a-toacodec.h>
+#include <dt-bindings/sound/meson-g12a-tohdmitx.h>
+#include <dt-bindings/clock/g12a-clkc.h>
+#include <dt-bindings/reset/amlogic,meson-g12a-reset.h>
+#include <dt-bindings/clock/axg-audio-clkc.h>
+
+/ {
+	aliases {
+		serial0 = &uart_AO;
+		serial1 = &uart_AO_B;
+		serial2 = &uart_A;
+		i2c0 = &i2c0;
+		i2c1 = &i2c1;
+		i2c2 = &i2c2;
+		i2c3 = &i2c3;
+		i2c4 = &i2c_AO;
+		ethernet0 = &ethmac;
+		rtc0 = &rtc;
+		rtc1 = &vrtc;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory@0 {
+		device_type = "memory";
+		reg = <0x0 0x0 0x0 0xf0000000>;
+	};
+
+	gpio-keys-polled {
+		compatible = "gpio-keys-polled";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		poll-interval = <100>;
+
+		power-button {
+			label = "power";
+			linux,code = <KEY_POWER>;
+			gpios = <&gpio GPIOC_7 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		/* USB-OTG Switch GPIO */
+		usb-switch {
+			label = "usb_switch";
+			gpios = <&gpio GPIOX_7 GPIO_ACTIVE_LOW>;
+			default-state = "on";
+		};
+	};
+
+	emmc_pwrseq: emmc-pwrseq {
+		compatible = "mmc-pwrseq-emmc";
+		reset-gpios = <&gpio BOOT_12 GPIO_ACTIVE_LOW>;
+	};
+
+	sdio_pwrseq: sdio-pwrseq {
+		compatible = "mmc-pwrseq-simple";
+		reset-gpios = <&gpio GPIOX_6 GPIO_ACTIVE_LOW>;
+	};
+
+	dc_in: regulator-dc_in {
+		compatible = "regulator-fixed";
+		regulator-name = "DC_IN";
+		regulator-min-microvolt = <12000000>;
+		regulator-max-microvolt = <12000000>;
+		regulator-always-on;
+	};
+
+	vcc_5v: regulator-vcc_5v {
+		compatible = "regulator-fixed";
+		regulator-name = "VCC_5V";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		vin-supply = <&dc_in>;
+
+		/* SY8113B */
+		gpio = <&gpio GPIOH_8 GPIO_OPEN_DRAIN>;
+		enable-active-high;
+	};
+
+	vsys_3v3: regulator-vsys_3v3 {
+		compatible = "regulator-fixed";
+		regulator-name = "VSYS_3V3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		vin-supply = <&dc_in>;
+		regulator-always-on;
+	};
+
+	usb_pwr_en: regulator-usb-pwr-en {
+		compatible = "regulator-fixed";
+		regulator-name = "USB_PWR_EN";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		vin-supply = <&vcc_5v>;
+		enable-active-high;
+	};
+
+	usb1_pow: regulator-usb1-pow {
+		compatible = "regulator-fixed";
+		regulator-name = "USB1_POW";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		vin-supply = <&vcc_5v>;
+		enable-active-high;
+	};
+
+	vddao_3v3: regulator-vddao-3v3 {
+		compatible = "regulator-fixed";
+		regulator-name = "VDDAO_3V3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		vin-supply = <&dc_in>;
+		regulator-always-on;
+	};
+
+	vddao_1v8: regulator-vddao_1v8 {
+		compatible = "regulator-fixed";
+		regulator-name = "VDDAO_1V8";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+		vin-supply = <&vddao_3v3>;
+		regulator-always-on;
+	};
+
+	usb_pwr: regulator-usb_pwr {
+		compatible = "regulator-fixed";
+		regulator-name = "USB_PWR";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		vin-supply = <&vcc_5v>;
+		enable-active-high;
+	};
+
+	hdmi-connector {
+		compatible = "hdmi-connector";
+		type = "a";
+		status = "okay";
+
+		port {
+			hdmi_connector_in: endpoint {
+				remote-endpoint = <&hdmi_tx_tmds_out>;
+			};
+		};
+	};
+
+	spdif_dit: audio-codec-1 {
+		#sound-dai-cells = <0>;
+		compatible = "linux,spdif-dit";
+		status = "okay";
+		sound-name-prefix = "DIT";
+	};
+
+	sound {
+		compatible = "amlogic,axg-sound-card";
+		model = "UNIONPI-TIGER";
+		audio-widgets = "Line", "Lineout",
+				"Line", "Linein";
+		audio-aux-devs = <&tdmout_b>, <&tdmout_c>, 
+				<&tdmin_a>, <&tdmin_b>, <&tdmin_c>, <&tdmin_lb>;
+		audio-routing = "TDMOUT_B IN 0", "FRDDR_A OUT 1",
+				"TDMOUT_B IN 1", "FRDDR_B OUT 1",
+				"TDMOUT_B IN 2", "FRDDR_C OUT 1",
+				"TDM_B Playback", "TDMOUT_B OUT",
+				"TDMOUT_C IN 0", "FRDDR_A OUT 2",
+				"TDMOUT_C IN 1", "FRDDR_B OUT 2",
+				"TDMOUT_C IN 2", "FRDDR_C OUT 2",
+				"TDM_C Playback", "TDMOUT_C OUT",
+				/* for audio capture */
+				"TDMIN_A IN 1", "TDM_B Capture",
+				"TDMIN_B IN 1", "TDM_B Capture",
+				"TDMIN_C IN 1", "TDM_B Capture",
+				"TDMIN_A IN 2", "TDM_C Capture",
+				"TDMIN_B IN 2", "TDM_C Capture",
+				"TDMIN_C IN 2", "TDM_C Capture",
+				"TDMIN_A IN 4", "TDM_B Loopback",
+				"TDMIN_B IN 4", "TDM_B Loopback",
+				"TDMIN_C IN 4", "TDM_B Loopback",
+				"TDMIN_A IN 5", "TDM_C Loopback",
+				"TDMIN_B IN 5", "TDM_C Loopback",
+				"TDMIN_C IN 5", "TDM_C Loopback",
+				"TDMIN_LB IN 1", "TDM_B Capture",
+				"TDMIN_LB IN 2", "TDM_C Capture",
+				"TDMIN_LB IN 4", "TDM_B Loopback",
+				"TDMIN_LB IN 5", "TDM_C Loopback",
+				/* tdmin -> toddr */
+				"TODDR_A IN 0", "TDMIN_A OUT",
+				"TODDR_B IN 0", "TDMIN_A OUT",
+				"TODDR_C IN 0", "TDMIN_A OUT",
+				"TODDR_A IN 1", "TDMIN_B OUT",
+				"TODDR_B IN 1", "TDMIN_B OUT",
+				"TODDR_C IN 1", "TDMIN_B OUT",
+				"TODDR_A IN 2", "TDMIN_C OUT",
+				"TODDR_B IN 2", "TDMIN_C OUT",
+				"TODDR_C IN 2", "TDMIN_C OUT",
+				"TODDR_A IN 6", "TDMIN_LB OUT",
+				"TODDR_B IN 6", "TDMIN_LB OUT",
+				"TODDR_C IN 6", "TDMIN_LB OUT",
+				"Linein MIC1", "Linein",
+				"TDM_B Capture", "Linein AIFTX";
+
+		assigned-clocks = <&clkc CLKID_MPLL2>,
+					<&clkc CLKID_MPLL0>,
+					<&clkc CLKID_MPLL1>;
+		assigned-clock-parents = <0>, <0>, <0>;
+		assigned-clock-rates = <294912000>,
+					 	<270950400>,
+					 	<393216000>;
+		status = "okay";
+
+		dai-link-0 {
+			sound-dai = <&frddr_a>;
+		};
+
+		dai-link-1 {
+			sound-dai = <&frddr_b>;
+		};
+
+		dai-link-2 {
+			sound-dai = <&frddr_c>;
+		};
+
+		dai-link-3 {
+			sound-dai = <&toddr_a>;
+		};
+
+		dai-link-4 {
+			sound-dai = <&toddr_b>;
+		};
+
+		dai-link-5 {
+			sound-dai = <&toddr_c>;
+		};
+
+		/* 8ch hdmi interface */
+		dai-link-6 {
+			sound-dai = <&tdmif_b>;
+			dai-format = "i2s";
+			dai-tdm-slot-tx-mask-0 = <1 1>;
+			dai-tdm-slot-rx-mask-1 = <1 1>;
+			dai-tdm-slot-tx-mask-2 = <1 1>;
+			dai-tdm-slot-tx-mask-3 = <1 1>;
+			mclk-fs = <256>;
+
+			codec-0 {
+				sound-dai = <&tohdmitx TOHDMITX_I2S_IN_B>;
+			};
+			
+			codec-1 {
+				sound-dai = <&toacodec TOACODEC_IN_B>;
+			};
+			
+			/* audio capture */
+			codec-2 {
+				sound-dai = <&nau8540>;
+			};
+		};
+
+		/* i2s jack output interface */
+		dai-link-7 {
+			sound-dai = <&tdmif_c>;
+			dai-format = "i2s";
+			dai-tdm-slot-tx-mask-0 = <1 1>;
+			mclk-fs = <256>;
+
+			codec-0 {
+				sound-dai = <&tohdmitx TOHDMITX_I2S_IN_C>;
+			};
+
+			codec-1 {
+				sound-dai = <&toacodec TOACODEC_IN_C>;
+			};
+		};
+		
+		/* hdmi glue */
+		dai-link-8 {
+			sound-dai = <&tohdmitx TOHDMITX_I2S_OUT>;
+
+			codec {
+				sound-dai = <&hdmi_tx>;
+			};
+		};
+
+		/* acodec glue */
+		dai-link-9 {
+			sound-dai = <&toacodec TOACODEC_OUT>;
+
+			codec {
+				sound-dai = <&acodec>;
+			};
+		};
+	};
+};
+
+&pdm {
+	status = "okay";
+};
+
+&acodec {
+	AVDD-supply = <&vddao_1v8>;
+	status = "okay";
+};
+
+&arb {
+	status = "okay";
+};
+
+&clkc_audio {
+	status = "okay";
+};
+
+&cec_AO {
+	pinctrl-0 = <&cec_ao_a_h_pins>;
+	pinctrl-names = "default";
+	status = "disabled";
+	hdmi-phandle = <&hdmi_tx>;
+};
+
+&cecb_AO {
+	pinctrl-0 = <&cec_ao_b_h_pins>;
+	pinctrl-names = "default";
+	status = "okay";
+	hdmi-phandle = <&hdmi_tx>;
+};
+
+&ext_mdio {
+	external_phy: ethernet-phy@0 {
+		/* Realtek RTL8211F (0x001cc916) */
+		reg = <0>;
+		max-speed = <1000>;
+		reset-assert-us = <10000>;
+		reset-deassert-us = <80000>;
+		reset-gpios = <&gpio GPIOZ_15 (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>;
+
+		interrupt-parent = <&gpio_intc>;
+		/* MAC_INTR on GPIOZ_14 */
+		interrupts = <26 IRQ_TYPE_LEVEL_LOW>;
+	};
+};
+
+&ethmac {
+				pinctrl-0 = <&eth_pins>, <&eth_rgmii_pins>;
+				pinctrl-names = "default";
+				status = "okay";
+				phy-mode = "rgmii";
+				phy-handle = <&external_phy>;
+				amlogic,tx-delay-ns = <2>;
+};
+
+&frddr_a {
+	status = "okay";
+};
+
+&frddr_b {
+	status = "okay";
+};
+
+&frddr_c {
+	status = "okay";
+};
+
+&hdmi_tx {
+	status = "okay";
+	pinctrl-0 = <&hdmitx_hpd_pins>, <&hdmitx_ddc_pins>;
+	pinctrl-names = "default";
+	hdmi-supply = <&vcc_5v>;
+};
+
+&hdmi_tx_tmds_port {
+	hdmi_tx_tmds_out: endpoint {
+		remote-endpoint = <&hdmi_connector_in>;
+	};
+};
+
+&mipi_dsi {
+	status = "okay";
+	
+	assigned-clocks = <&clkc CLKID_GP0_PLL>,
+			  <&clkc CLKID_MIPI_DSI_PXCLK_SEL>,
+			  <&clkc CLKID_MIPI_DSI_PXCLK>;
+	assigned-clock-parents = <0>,
+				 <&clkc CLKID_GP0_PLL>,
+				 <0>;
+	assigned-clock-rates = <720000000>,
+			       <0>,
+			       <720000000>;
+
+	panel@0 {
+		status = "okay";
+		compatible = "chipone,icn6211";
+		power-supply = <&vddao_3v3>;
+		/*compatible = "waveshare,tl070hdv03ct";
+		power-supply = <&vcc_5v>;*/
+		reg = <0>;
+
+		port {
+			dsi_in_panel: endpoint {
+				remote-endpoint = <&dsi_out_panel>;
+			};
+		};
+	};
+};
+
+&mipi_analog_dphy {
+	status = "okay";
+};
+
+&mipi_dphy {
+	status = "okay";
+};
+
+&mipi_dsi_panel_port {
+	dsi_out_panel: endpoint {
+		remote-endpoint = <&dsi_in_panel>;
+	};
+};
+
+&i2c2 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c2_sck_x_pins>, <&i2c2_sda_x_pins>;
+	clock-frequency = <100000>; /* default 100k */
+};
+
+&i2c3 {
+	status = "okay";
+	pinctrl-names="default";
+	pinctrl-0 = <&i2c3_sck_a_pins>, <&i2c3_sda_a_pins>;
+	clock-frequency = <100000>; /* default 100k */
+
+	i2cmux@71 {
+		compatible = "nxp,pca9546";
+		reg = <0x71>;
+		status = "okay";
+		pinctrl-names = "default";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		/*i2c and gpio_extension*/
+		i2c3a: i2c3@0 {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				reg = <0>;
+				status = "okay";
+		};
+
+		i2c3b: i2c3@1 {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				reg = <1>;
+				status = "okay";
+		};
+
+		i2c3c: i2c3@2 {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				reg = <2>;
+
+				pca9575b: gpio@21 {
+						compatible = "nxp,pca9575";
+						reg = <0x21>;
+						gpio-controller;
+						#gpio-cells = <0x02>;
+						status = "okay";
+						gpio-line-names = "WAKEUP_OUT", "PWR_ON_N", "WAKEUP_IN", "W_DISABLE_N",
+												"PMU_RSTIN_N", "9342_RST", "SEN-SYNC1", "", "MUTE",
+												"WIFI_LED", "CM_GPIO_1", "", "AMP_PWRDN", "POWER_LED",
+												"GPIO_18", "GPIO_17";
+				};
+
+				pca9575a: gpio@23 {
+						compatible = "nxp,pca9575";
+						reg = <0x23>;
+						gpio-controller;
+						#gpio-cells = <0x02>;
+						status = "okay";
+						gpio-line-names = "GPIO_01", "GPIO_02", "GPIO_03", "GPIO_04",
+												"GPIO_05", "GPIO_06", "GPIO_07", "GPIO_08", "GPIO_09",
+												"GPIO_10", "GPIO_11", "GPIO_12", "GPIO_13", "GPIO_14",
+												"GPIO_15", "GPIO_16";
+				};
+
+				es7243: es7243@11 {
+					compatible = "everest,es7243";
+					#sound-dai-cells = <0>;
+					reg = <0x11>;
+					status = "okay";
+				};
+
+				nau8540: nau8540@1c {
+						compatible = "nuvoton,nau8540";
+						#sound-dai-cells = <0>;
+						reg = <0x1c>;
+						sound-name-prefix = "Linein";
+						status = "okay";
+				};
+
+				tlv320dac3101: tlv320dac3101@18 {
+						compatible = "ti,tlv320dac3101";
+						#sound-dai-cells = <0>;
+						reg = <0x18>;
+						slot_number = <3>;
+						differential_pair = <1>;
+						status = "okay";
+				};
+
+				ft5406: ft5406@38 {
+						compatible = "edt,edt-ft5406";
+						reg = <0x38>;
+						touchscreen-size-x = < 800 >;
+						touchscreen-size-y = < 480 >;
+						touchscreen-inverted-x = < 1 >;
+						touchscreen-inverted-y = < 1 >;
+						status = "okay";
+				};
+
+				icn6211: icn6211@45 {
+						compatible = "chipone,icn6211-i2c";
+						status = "okay";
+						reg = <0x45>;
+				};
+
+				sensor-i2c@6c {
+					compatible = "arm, i2c-sensor";
+					reg = <0x6c>;
+					reg-names = "i2c-sensor";
+					slave-addr = <0x6c>;
+					reg-type = <2>;
+					reg-data-type = <1>;
+					link-device = <&phycsi>;
+				};
+		};
+
+		/*icm-20948*/
+		i2c3d: i2c3@3 {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				reg = <3>;
+				status = "okay";
+		};
+	};
+};
+
+&i2c_AO {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c_ao_sck_pins>, <&i2c_ao_sda_pins>;
+	clock-frequency = <400000>;
+
+	rtc: rtc@51 {
+		compatible = "nxp,pcf8563";
+		reg = <0x51>;
+		status = "okay";
+		wakeup-source;
+	};
+};
+
+&pwm_ab {
+	status = "okay";
+};
+
+&pwm_AO_ab {
+	status = "okay";
+	pinctrl-0 = <&pwm_ao_a_pins>;
+	pinctrl-names = "default";
+	clocks = <&xtal>;
+	clock-names = "clkin0";
+};
+
+&saradc {
+	status = "okay";
+	vref-supply = <&vddao_1v8>;
+};
+
+/* eMMC */
+&sd_emmc_c {
+	status = "okay";
+	compatible = "amlogic,meson-axg-mmc";
+	pinctrl-0 = <&emmc_ctrl_pins>, <&emmc_data_8b_pins>, <&emmc_ds_pins>;
+	pinctrl-1 = <&emmc_clk_gate_pins>;
+	pinctrl-names = "default", "clk-gate";
+
+	bus-width = <8>;
+	cap-mmc-highspeed;
+	mmc-ddr-1_8v;
+	mmc-hs200-1_8v;
+	max-frequency = <200000000>;
+	disable-wp;
+
+	mmc-pwrseq = <&emmc_pwrseq>;
+	vmmc-supply = <&vddao_3v3>;
+	vqmmc-supply = <&vddao_1v8>;
+};
+
+/* SD card */
+&sd_emmc_b {
+	status = "okay";
+	compatible = "amlogic,meson-axg-mmc";
+	pinctrl-0 = <&sdcard_c_pins>;
+	pinctrl-1 = <&sdcard_clk_gate_c_pins>;
+	pinctrl-names = "default", "clk-gate";
+
+	bus-width = <4>;
+	cap-sd-highspeed;
+	max-frequency = <50000000>;
+	disable-wp;
+
+	cd-gpios = <&gpio GPIOC_6 GPIO_ACTIVE_LOW>;
+	vmmc-supply = <&vddao_3v3>;
+	vqmmc-supply = <&vddao_3v3>;
+};
+
+/* SDIO */
+&sd_emmc_a {
+	status = "okay";
+	pinctrl-0 = <&sdio_pins>;
+	pinctrl-1 = <&sdio_clk_gate_pins>;
+	pinctrl-names = "default", "clk-gate";
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	bus-width = <4>;
+	cap-sd-highspeed;
+	sd-uhs-sdr104;
+	max-frequency = <167000000>;
+
+	non-removable;
+	disable-wp;
+
+	/* WiFi firmware requires power to be kept while in suspend */
+	keep-power-in-suspend;
+
+	mmc-pwrseq = <&sdio_pwrseq>;
+
+	vmmc-supply = <&vddao_3v3>;
+	vqmmc-supply = <&vddao_1v8>;
+};
+
+&tdmif_a {
+	status = "okay";
+};
+
+&tdmif_b {
+	pinctrl-0 = <&tdm_b_sclk_pins>, <&tdm_b_fs_pins>,
+				<&tdm_b_din0_pins>, <&tdm_b_din1_pins>, <&mclk0_a_pins>;
+	pinctrl-names = "default";
+	
+	assigned-clocks = <&clkc_audio AUD_CLKID_TDM_MCLK_PAD0>,
+						<&clkc_audio AUD_CLKID_TDM_SCLK_PAD1>,
+						<&clkc_audio AUD_CLKID_TDM_LRCLK_PAD1>;
+	assigned-clock-parents = <&clkc_audio AUD_CLKID_MST_B_MCLK>,
+						<&clkc_audio AUD_CLKID_MST_B_SCLK>,
+						<&clkc_audio AUD_CLKID_MST_B_LRCLK>;
+	assigned-clock-rates = <0>, <0>, <0>;
+
+	status = "okay";
+};
+
+&tdmif_c {
+	status = "okay";
+};
+
+&tdmin_a {
+	status = "okay";
+};
+
+&tdmin_b {
+	status = "okay";
+};
+
+&tdmin_lb {
+	status = "okay";
+};
+
+&tdmin_c {
+	status = "okay";
+};
+
+&tdmout_a {
+	status = "okay";
+};
+
+&tdmout_b {
+	status = "okay";
+};
+
+&tdmout_c {
+	status = "okay";
+};
+
+&toacodec {
+	status = "okay";
+};
+
+&tohdmitx {
+	status = "okay";
+};
+
+&toddr_a {
+	status = "okay";
+};
+
+&toddr_b {
+	status = "okay";
+};
+
+&toddr_c {
+	status = "okay";
+};
+
+&uart_AO {
+	status = "okay";
+	pinctrl-0 = <&uart_ao_a_pins>;
+	pinctrl-names = "default";
+	xtal_tick_en = <2>;
+};
+
+&uart_AO_B {
+	status = "okay";
+	pinctrl-0 = <&uart_ao_b_2_pins>;
+	pinctrl-names = "default";
+};
+
+/* BT UART */
+&uart_A {
+	status = "okay";
+	pinctrl-0 = <&uart_a_pins>;
+	pinctrl-names = "default";
+};
+
+&dwc2 {
+	status = "okay";
+};
+
+&dwc3 {
+	status = "okay";
+};
+
+&usb2_phy0 {
+	status = "okay";
+	phy-supply = <&usb1_pow>;
+};
+
+&usb2_phy1 {
+	status = "okay";
+	phy-supply = <&usb1_pow>;
+};
+
+&usb3_pcie_phy {
+	status = "okay";
+	phy-supply = <&usb_pwr>;
+};
+
+&usb {
+	status = "okay";
+	dr_mode = "host";
+	vbus-supply = <&usb_pwr_en>;
+};
+
+&spicc0 {
+	status = "okay";
+	pinctrl-names = "default","gpio_periphs";
+	pinctrl-0 = <&spicc0_x_pins>;
+	pinctrl-1 = <&spicc0_ss0_x_pins>;
+	num_chipselect = <1>;
+	cs-gpios = <&gpio GPIOX_10 GPIO_ACTIVE_LOW>;
+
+	spidev@0 {
+		status = "okay";
+		compatible = "rohm,dh2228fv";
+		reg = <0>;
+		spi-max-frequency = <10000000>;
+	};
+};
+
+&spicc1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&spicc1_pins>;
+	num_chipselect = <1>;
+	cs-gpios = <&gpio GPIOH_6 GPIO_ACTIVE_LOW>;
+
+	spidev@0 {
+		status = "okay";
+		compatible = "microchip,mcp2515";
+		reg = <0>;
+		clocks = <&osc8M>;
+		spi-max-frequency = <5000000>;
+		interrupt-parent = <&gpio_intc>;
+		interrupts = <66 IRQ_TYPE_LEVEL_LOW>;
+	};
+};
