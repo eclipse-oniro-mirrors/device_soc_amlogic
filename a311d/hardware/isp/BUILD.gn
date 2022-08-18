@@ -26,8 +26,13 @@ ohos_prebuilt_executable("iv009_isp") {
 }
 
 ohos_prebuilt_etc("libc.so.6") {
-  source = "lib/libc.so.6"
-  module_install_dir = "lib/glibc"
+  if (target_cpu == "arm") {
+    source = "lib/libc.so.6"
+    module_install_dir = "lib/glibc"
+  } else {
+    source = "lib64/libc.so.6"
+    module_install_dir = "lib64/glibc"
+  }
   install_images = [ "vendor" ]
 
   part_name = "unionman_products"
@@ -35,8 +40,13 @@ ohos_prebuilt_etc("libc.so.6") {
 }
 
 ohos_prebuilt_etc("libdl.so.2") {
-  source = "lib/libdl.so.2"
-  module_install_dir = "lib/glibc"
+  if (target_cpu == "arm") {
+    source = "lib/libdl.so.2"
+    module_install_dir = "lib/glibc"
+  } else {
+    source = "lib64/libdl.so.2"
+    module_install_dir = "lib64/glibc"
+  }
   install_images = [ "vendor" ]
 
   part_name = "unionman_products"
@@ -44,18 +54,63 @@ ohos_prebuilt_etc("libdl.so.2") {
 }
 
 ohos_prebuilt_etc("libpthread.so.0") {
-  source = "lib/libpthread.so.0"
-  module_install_dir = "lib/glibc"
+  if (target_cpu == "arm") {
+    source = "lib/libpthread.so.0"
+    module_install_dir = "lib/glibc"
+  } else {
+    source = "lib64/libpthread.so.0"
+    module_install_dir = "lib64/glibc"
+  }
   install_images = [ "vendor" ]
 
   part_name = "unionman_products"
   install_enable = true
 }
 
-ohos_prebuilt_executable("ld-linux-armhf.so.3") {
-  source = "lib/ld-linux-armhf.so.3"
+ohos_prebuilt_executable("ld-linux.so") {
+  if (target_cpu == "arm") {
+    source = "lib/ld-linux-armhf.so.3"
+  } else {
+    source = "lib64/ld-linux-aarch64.so.1"
+  }
   module_install_dir = "bin"
   install_images = [ "system" ]
+
+  part_name = "unionman_products"
+  install_enable = true
+}
+
+ohos_prebuilt_executable("libstdc++.so.6.0") {
+  source = "lib64/libstdc++.so.6.0"
+  module_install_dir = "lib64/glibc"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+  install_enable = true
+}
+
+ohos_prebuilt_executable("libgcc_s.so.1") {
+  source = "lib64/libgcc_s.so.1"
+  module_install_dir = "lib64/glibc"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+  install_enable = true
+}
+
+ohos_prebuilt_executable("librt.so.6") {
+  source = "lib64/librt.so.6"
+  module_install_dir = "lib64/glibc"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+  install_enable = true
+}
+
+ohos_prebuilt_executable("libm.so.6") {
+  source = "lib64/libm.so.6"
+  module_install_dir = "lib64/glibc"
+  install_images = [ "vendor" ]
 
   part_name = "unionman_products"
   install_enable = true
@@ -100,9 +155,18 @@ group("isp") {
     ":iv009_isp_iq.ko",
     ":iv009_isp_lens.ko",
     ":iv009_isp_sensor.ko",
-    ":ld-linux-armhf.so.3",
+    ":ld-linux.so",
     ":libc.so.6",
     ":libdl.so.2",
     ":libpthread.so.0",
   ]
+
+  if (target_cpu == "arm64") {
+    deps += [
+      ":libgcc_s.so.1",
+      ":libm.so.6",
+      ":librt.so.6",
+      ":libstdc++.so.6.0",
+    ]
+  }
 }
