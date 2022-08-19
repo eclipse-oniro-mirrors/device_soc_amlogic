@@ -37,6 +37,6 @@ device/soc/amlogic
 
 - device_soc_amlogic
 
-- [vendor_unionman](https://gitee.com/openharmony-sig/vendor_unionman)
+- [vendor_unionman](https://gitee.com/openharmony/vendor_unionman)
 
-- [device_board_unionman](https://gitee.com/openharmony-sig/device_board_unionman)
+- [device_board_unionman](https://gitee.com/openharmony/device_board_unionman)
