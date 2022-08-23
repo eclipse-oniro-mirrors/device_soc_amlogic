@@ -85,6 +85,8 @@ struct mmc_card *card_dtb;
 static struct aml_dtb_info dtb_infos = {{0, 0}, {0, 0}};
 struct mmc_partitions_fmt *pt_fmt;
 
+static int mmc_transfer(struct mmc_card *card, unsigned int dev_addr, unsigned int blocks, void *buf, int write);
+
 int mmc_read_internal(struct mmc_card *card, unsigned int dev_addr, unsigned int blocks, void *buf)
 {
     return mmc_transfer(card, dev_addr, blocks, buf, 0);
