@@ -84,6 +84,7 @@ ohos_prebuilt_executable("libstdc++.so.6.0") {
   source = "lib64/libstdc++.so.6.0"
   module_install_dir = "lib64/glibc"
   install_images = [ "vendor" ]
+  symlink_target_name = [ "libstdc++.so.6" ]
 
   part_name = "unionman_products"
   install_enable = true
@@ -102,6 +103,7 @@ ohos_prebuilt_executable("librt.so.6") {
   source = "lib64/librt.so.6"
   module_install_dir = "lib64/glibc"
   install_images = [ "vendor" ]
+  symlink_target_name = [ "librt.so.1" ]
 
   part_name = "unionman_products"
   install_enable = true

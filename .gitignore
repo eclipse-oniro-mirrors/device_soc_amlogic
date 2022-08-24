@@ -7,3 +7,6 @@
 *.builtin
 *.a.*
 tags
+*.tmp
+*.dtb
+*.dtb.cmd
