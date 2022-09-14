@@ -86,15 +86,258 @@ ohos_prebuilt_etc("jpegenc.ko") {
   part_name = "unionman_products"
 }
 
+ohos_prebuilt_etc("amionvideo.ko") {
+  source = "amionvideo.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amrdma.ko") {
+  source = "amrdma.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_h264.ko") {
+  source = "amvdec_h264.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_h264mvc.ko") {
+  source = "amvdec_h264mvc.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_mh264.ko") {
+  source = "amvdec_mh264.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_mmpeg12.ko") {
+  source = "amvdec_mmpeg12.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_mpeg12.ko") {
+  source = "amvdec_mpeg12.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvfm.ko") {
+  source = "amvfm.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvideo.ko") {
+  source = "amvideo.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvpu.ko") {
+  source = "amvpu.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("di.ko") {
+  source = "di.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("dil.ko") {
+  source = "dil.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("stream_input.ko") {
+  source = "stream_input.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("ppmgr.ko") {
+  source = "ppmgr.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvout_legacy.ko") {
+  source = "amvout_legacy.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_av1.ko") {
+  source = "amvdec_av1.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_avs.ko") {
+  source = "amvdec_avs.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_avs2.ko") {
+  source = "amvdec_avs2.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_h265.ko") {
+  source = "amvdec_h265.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_mavs.ko") {
+  source = "amvdec_mavs.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_mjpeg.ko") {
+  source = "amvdec_mjpeg.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_mmjpeg.ko") {
+  source = "amvdec_mmjpeg.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_mmpeg4.ko") {
+  source = "amvdec_mmpeg4.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_mpeg4.ko") {
+  source = "amvdec_mpeg4.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_real.ko") {
+  source = "amvdec_real.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_vc1.ko") {
+  source = "amvdec_vc1.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("amvdec_vp9.ko") {
+  source = "amvdec_vp9.ko"
+  module_install_dir = "modules"
+  install_images = [ "vendor" ]
+
+  part_name = "unionman_products"
+}
+
 group("media_modules") {
   deps = [
+    ":amionvideo.ko",
+    ":amrdma.ko",
+    ":amvdec_av1.ko",
+    ":amvdec_avs.ko",
+    ":amvdec_avs2.ko",
+    ":amvdec_h264.ko",
+    ":amvdec_h264mvc.ko",
+    ":amvdec_h265.ko",
+    ":amvdec_mavs.ko",
+    ":amvdec_mh264.ko",
+    ":amvdec_mjpeg.ko",
+    ":amvdec_mmjpeg.ko",
+    ":amvdec_mmpeg12.ko",
+    ":amvdec_mmpeg4.ko",
+    ":amvdec_mpeg12.ko",
+    ":amvdec_mpeg4.ko",
+    ":amvdec_real.ko",
+    ":amvdec_vc1.ko",
+    ":amvdec_vp9.ko",
+    ":amvfm.ko",
+    ":amvideo.ko",
+    ":amvout_legacy.ko",
+    ":amvpu.ko",
     ":decoder_common.ko",
+    ":di.ko",
+    ":dil.ko",
     ":encoder.ko",
     ":firmware.ko",
     ":jpegenc.ko",
     ":media_clock.ko",
     ":meson-vdec.ko",
+    ":ppmgr.ko",
     ":registers.ko",
+    ":stream_input.ko",
     ":v4l2-mem2mem.ko",
     ":videobuf2-dma-contig.ko",
   ]

@@ -23,8 +23,6 @@
 #include <linux/sched.h>
 #include <linux/semaphore.h>
 
-#include <linux/soc/amlogic/meson-canvas.h>
-
 #ifdef CONFIG_COMPAT
 #include <linux/compat.h>
 #endif
@@ -736,9 +734,6 @@ struct ge2d_manager_s {
     int process_queue_state;
     int probe;
     struct platform_device *pdev;
-
-    struct meson_canvas *canvas;
-    uint8_t alloced_canvas_index[MAX_PLANE * 3]; // alloced canvas index.
 };
 
 struct src_dst_para_s {
