@@ -29,11 +29,15 @@
 #include <linux/soc/amlogic/meson-canvas.h>
 
 #include <linux/amlogic/media/canvas/canvas.h>
+#include "canvas_priv.h"
 
 #define local_fiq_enable() asm("msr        daifclr, #1" : : : "memory")
 #define local_fiq_disable() asm("msr        daifset, #1" : : : "memory")
 
 #define NUM_CANVAS 256
+
+#define CANVAS_INDEX_START		0
+#define CANVAS_INDEX_END		0xef
 
 struct canvas_device_info {
     const char *device_name;
@@ -299,18 +303,14 @@ static int canvas_probe(struct platform_device *pdev)
 
     spin_lock_init(&info->lock);
 
-    // Pre-Alloc canvas for "VDec" : [0x78, 0xbf]
-    if (alloc_canvas_range(info, 0x78, 0xbf)) {
-        dev_err(dev, "alloc_canvas_range(0x78, 0xbf) failed\n");
+    // Pre-Alloc canvas with lower indexs for legacy driver 
+    if (alloc_canvas_range(info, CANVAS_INDEX_START, CANVAS_INDEX_END)) {
+        dev_err(dev, "alloc_canvas_range(0x%x, 0x%x) failed\n", CANVAS_INDEX_START, CANVAS_INDEX_END);
         return -EBUSY;
     }
 
-    // Pre-Alloc canvas for "VEnc" : [0xe4, 0xef]
-    if (alloc_canvas_range(info, 0xe4, 0xef)) {
-        dev_err(dev, "alloc_canvas_range(0xe4, 0xef) failed\n");
-        return -EBUSY;
-    }
 
+    amcanvas_manager_init();
     dev_info(dev, "canvas_legacy probe success\n");
 
     return 0;
@@ -323,8 +323,8 @@ static int canvas_remove(struct platform_device *pdev)
     struct device *dev = &pdev->dev;
 
     // Free canvas
-    free_canvas_range(info, 0x78, 0xbf);
-    free_canvas_range(info, 0xe4, 0xef);
+    free_canvas_range(info, CANVAS_INDEX_START, CANVAS_INDEX_END);
+
 
     dev_info(dev, "Canvas driver removed.\n");
 
@@ -364,6 +364,7 @@ static int __init amcanvas_init(void)
 
 static void __exit amcanvas_exit(void)
 {
+    platform_driver_unregister(&canvas_driver);
 }
 
 module_init(amcanvas_init);

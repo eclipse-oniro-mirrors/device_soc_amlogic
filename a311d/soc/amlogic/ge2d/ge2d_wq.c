@@ -30,6 +30,8 @@
 
 /* Amlogic Headers */
 #include <linux/amlogic/cpu_version.h>
+#include <linux/amlogic/media/canvas/canvas.h>
+#include <linux/amlogic/media/canvas/canvas_mgr.h>
 #include <linux/amlogic/media/ge2d/ge2d.h>
 #include <linux/platform_device.h>
 #ifdef CONFIG_AMLOGIC_ION
@@ -291,68 +293,83 @@ static void ge2d_dump_cmd(struct ge2d_cmd_s *cfg)
 
 static void ge2d_set_canvas(struct ge2d_config_s *cfg)
 {
-    int i;
-    uint32_t index_src = 0, index_src2 = 0, index_dst = 0;
-    uint8_t canvas_index = 0;
-    int canvas_set = 0;
+	int i, index;
+	int index_src = 0, index_src2 = 0, index_dst = 0;
+	int canvas_set = 0;
 
-    for (i = 0; i < MAX_PLANE; i++) {
-        if (cfg->src_canvas_cfg[i].canvas_used) {
-            canvas_index = ge2d_manager.alloced_canvas_index[i];
-            meson_canvas_config(ge2d_manager.canvas, canvas_index, cfg->src_canvas_cfg[i].phys_addr,
-                                cfg->src_canvas_cfg[i].stride, cfg->src_canvas_cfg[i].height, CANVAS_ADDR_NOWRAP,
-                                CANVAS_BLKMODE_LINEAR, 0);
+	index = ALLOC_CANVAS_INDEX;
+	for (i = 0; i < MAX_PLANE; i++) {
+		if (cfg->src_canvas_cfg[i].canvas_used) {
+			index_src |= index << (8 * i);
+#ifdef CONFIG_AMLOGIC_MEDIA_CANVAS
+			canvas_config(index++,
+				cfg->src_canvas_cfg[i].phys_addr,
+				cfg->src_canvas_cfg[i].stride,
+				cfg->src_canvas_cfg[i].height,
+				CANVAS_ADDR_NOWRAP,
+				CANVAS_BLKMODE_LINEAR);
+#endif
+			cfg->src_canvas_cfg[i].canvas_used = 0;
+			ge2d_log_dbg("src canvas: addr(%lx),stride(%d),height(%d)",
+				cfg->src_canvas_cfg[i].phys_addr,
+				cfg->src_canvas_cfg[i].stride,
+				cfg->src_canvas_cfg[i].height);
+			canvas_set = 1;
+		}
+	}
+	if (canvas_set) {
+		cfg->src1_data.canaddr = index_src;
+		ge2d_log_dbg("src canvas_index:%x\n", index_src);
+		canvas_set = 0;
+	}
+	for (i = 0; i < MAX_PLANE; i++) {
+		if (cfg->src2_canvas_cfg[i].canvas_used) {
+			index_src2 |= index << (8 * i);
+#ifdef CONFIG_AMLOGIC_MEDIA_CANVAS
+			canvas_config(index++,
+				cfg->src2_canvas_cfg[i].phys_addr,
+				cfg->src2_canvas_cfg[i].stride,
+				cfg->src2_canvas_cfg[i].height,
+				CANVAS_ADDR_NOWRAP,
+				CANVAS_BLKMODE_LINEAR);
+#endif
+			cfg->src2_canvas_cfg[i].canvas_used = 0;
+			ge2d_log_dbg("src2 canvas: addr(%lx),stride(%d),height(%d)",
+				cfg->src2_canvas_cfg[i].phys_addr,
+				cfg->src2_canvas_cfg[i].stride,
+				cfg->src2_canvas_cfg[i].height);
+			canvas_set = 1;
+		}
+	}
+	if (canvas_set) {
+		cfg->src2_dst_data.src2_canaddr = index_src2;
+		ge2d_log_dbg("src2 canvas_index:%x\n", index_src2);
+		canvas_set = 0;
+	}
 
-            index_src |= canvas_index << (8L * i);
-            cfg->src_canvas_cfg[i].canvas_used = 0;
-            ge2d_log_dbg("src canvas: addr(%lx),stride(%d),height(%d)", cfg->src_canvas_cfg[i].phys_addr,
-                         cfg->src_canvas_cfg[i].stride, cfg->src_canvas_cfg[i].height);
-            canvas_set = 1;
-        }
-    }
-    if (canvas_set) {
-        cfg->src1_data.canaddr = index_src;
-        ge2d_log_dbg("src canvas_index:%x\n", index_src);
-        canvas_set = 0;
-    }
-    for (i = 0; i < MAX_PLANE; i++) {
-        if (cfg->src2_canvas_cfg[i].canvas_used) {
-            canvas_index = ge2d_manager.alloced_canvas_index[MAX_PLANE + i];
-            meson_canvas_config(ge2d_manager.canvas, canvas_index, cfg->src2_canvas_cfg[i].phys_addr,
-                                cfg->src2_canvas_cfg[i].stride, cfg->src2_canvas_cfg[i].height, CANVAS_ADDR_NOWRAP,
-                                CANVAS_BLKMODE_LINEAR, 0);
-
-            index_src2 |= canvas_index << (8L * i);
-            cfg->src2_canvas_cfg[i].canvas_used = 0;
-            ge2d_log_dbg("src2 canvas: addr(%lx),stride(%d),height(%d)", cfg->src2_canvas_cfg[i].phys_addr,
-                         cfg->src2_canvas_cfg[i].stride, cfg->src2_canvas_cfg[i].height);
-            canvas_set = 1;
-        }
-    }
-    if (canvas_set) {
-        cfg->src2_dst_data.src2_canaddr = index_src2;
-        ge2d_log_dbg("src2 canvas_index:%x\n", index_src2);
-        canvas_set = 0;
-    }
-
-    for (i = 0; i < MAX_PLANE; i++) {
-        if (cfg->dst_canvas_cfg[i].canvas_used) {
-            canvas_index = ge2d_manager.alloced_canvas_index[MAX_PLANE * 2L + i];
-            meson_canvas_config(ge2d_manager.canvas, canvas_index, cfg->dst_canvas_cfg[i].phys_addr,
-                                cfg->dst_canvas_cfg[i].stride, cfg->dst_canvas_cfg[i].height, CANVAS_ADDR_NOWRAP,
-                                CANVAS_BLKMODE_LINEAR, 0);
-
-            index_dst |= canvas_index << (8L * i);
-            cfg->dst_canvas_cfg[i].canvas_used = 0;
-            ge2d_log_dbg("dst canvas: addr(%lx),stride(%d),height(%d)", cfg->dst_canvas_cfg[i].phys_addr,
-                         cfg->dst_canvas_cfg[i].stride, cfg->dst_canvas_cfg[i].height);
-            canvas_set = 1;
-        }
-    }
-    if (canvas_set) {
-        cfg->src2_dst_data.dst_canaddr = index_dst;
-        ge2d_log_dbg("dst canvas_index:%x\n", index_dst);
-    }
+	for (i = 0; i < MAX_PLANE; i++) {
+		if (cfg->dst_canvas_cfg[i].canvas_used) {
+			index_dst |= index << (8 * i);
+#ifdef CONFIG_AMLOGIC_MEDIA_CANVAS
+			canvas_config(index++,
+				cfg->dst_canvas_cfg[i].phys_addr,
+				cfg->dst_canvas_cfg[i].stride,
+				cfg->dst_canvas_cfg[i].height,
+				CANVAS_ADDR_NOWRAP,
+				CANVAS_BLKMODE_LINEAR);
+#endif
+			cfg->dst_canvas_cfg[i].canvas_used = 0;
+			ge2d_log_dbg("dst canvas: addr(%lx),stride(%d),height(%d)",
+				cfg->dst_canvas_cfg[i].phys_addr,
+				cfg->dst_canvas_cfg[i].stride,
+				cfg->dst_canvas_cfg[i].height);
+			canvas_set = 1;
+		}
+	}
+	if (canvas_set) {
+		cfg->src2_dst_data.dst_canaddr = index_dst;
+		ge2d_log_dbg("dst canvas_index:%x\n", index_dst);
+	}
 }
 
 static int ge2d_process_work_queue(struct ge2d_context_s *wq)
@@ -2159,24 +2176,6 @@ int ge2d_wq_init(struct platform_device *pdev, int irq, struct clk *clk)
 
     ge2d_log_info("ge2d: pdev=%px, irq=%d, clk=%px\n", pdev, irq, clk);
 
-    // Alloc Canvas
-    ge2d_manager.canvas = meson_canvas_get(&pdev->dev);
-    if (IS_ERR(ge2d_manager.canvas)) {
-        ge2d_log_err("can't get meson canvas\n");
-        return -1;
-    }
-    for (int i = 0; i < sizeof(ge2d_manager.alloced_canvas_index); i++) {
-        if (meson_canvas_alloc(ge2d_manager.canvas, &ge2d_manager.alloced_canvas_index[i]) != 0) {
-            ge2d_log_err("meson_canvas_alloc(%p) failed.\n", ge2d_manager.canvas);
-            // free pre-alloced canvas
-            for (int j = 0; j < i; j++) {
-                meson_canvas_free(ge2d_manager.canvas, ge2d_manager.alloced_canvas_index[j]);
-            }
-            return -1;
-        }
-        ge2d_log_info("Canvas ALLOC: [%d] = %d\n", i, ge2d_manager.alloced_canvas_index[i]);
-    }
-
     ge2d_manager.irq_num = request_irq(ge2d_irq, ge2d_wq_handle, IRQF_SHARED, "ge2d", (void *)&ge2d_manager);
     if (ge2d_manager.irq_num < 0) {
         ge2d_log_err("ge2d request irq error\n");
@@ -2217,12 +2216,6 @@ int ge2d_wq_deinit(void)
     ge2d_dma_buffer_destroy(ge2d_manager.buffer);
     ge2d_manager.buffer = NULL;
     ge2d_manager.pdev = NULL;
-
-    // Free Canvas
-    for (int i = 0; i < sizeof(ge2d_manager.alloced_canvas_index); i++) {
-        meson_canvas_free(ge2d_manager.canvas, ge2d_manager.alloced_canvas_index[i]);
-        ge2d_manager.alloced_canvas_index[i] = 0;
-    }
 
     return 0;
 }

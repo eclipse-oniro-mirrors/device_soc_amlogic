@@ -39,6 +39,7 @@ static const struct of_device_id iomap_dt_match[] = {
 static void __iomem *meson_reg_map[IO_BUS_MAX] = {NULL};
 static uint meson_reg_max[IO_BUS_MAX] = {0};
 void __iomem *vpp_base;
+EXPORT_SYMBOL(vpp_base);
 unsigned int vpp_max;
 
 inline int aml_reg_read(u32 bus_type, unsigned int reg, unsigned int *val)
