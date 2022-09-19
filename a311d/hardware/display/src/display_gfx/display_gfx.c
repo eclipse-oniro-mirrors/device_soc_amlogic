@@ -118,7 +118,7 @@ static int32_t InitGfx()
 
     ret = aml_ge2d_init(&g_ge2d);
     if (ret < 0) {
-        DISPLAY_LOGE("aml_ge2d_init failed. ret=%{bublic}d", ret);
+        DISPLAY_LOGE("aml_ge2d_init failed. ret=%{public}d", ret);
         return DISPLAY_FAILURE;
     }
 
@@ -215,7 +215,7 @@ static int32_t FillRect(ISurface *surface, IRect *rect, uint32_t color, GfxOpt *
 
     ret = aml_ge2d_process(&g_ge2d.ge2dinfo);
     if (ret < 0) {
-        DISPLAY_LOGE("aml_ge2d_process failed. ret=%{bublic}d", ret);
+        DISPLAY_LOGE("aml_ge2d_process failed. ret=%{public}d", ret);
         return DISPLAY_FAILURE;
     }
 
@@ -305,7 +305,7 @@ static int32_t BlitGe2dNoAlpha(ISurface *srcSurface, IRect sRect, ISurface *dstS
 
     ret = aml_ge2d_process(&g_ge2d.ge2dinfo);
     if (ret < 0) {
-        DISPLAY_LOGE("aml_ge2d_process failed. ret=%{bublic}d", ret);
+        DISPLAY_LOGE("aml_ge2d_process failed. ret=%{public}d", ret);
         return DISPLAY_FAILURE;
     }
 
@@ -332,7 +332,7 @@ static int32_t BlitGe2dAlpha(ISurface *dstSurface, IRect dRect)
 
     ret = aml_ge2d_process(&g_ge2d.ge2dinfo);
     if (ret < 0) {
-        DISPLAY_LOGE("aml_ge2d_process failed. ret=%{bublic}d", ret);
+        DISPLAY_LOGE("aml_ge2d_process failed. ret=%{public}d", ret);
         return DISPLAY_FAILURE;
     }
 
@@ -387,13 +387,13 @@ static int32_t Blit(ISurface *srcSurface, IRect *srcRect, ISurface *dstSurface, 
 
     ret = BlitGe2dNoAlpha(srcSurface, sRect, dstSurface, dRect);
     if (ret < 0) {
-        DISPLAY_LOGE("BlitGe2dNoAlpha failed. ret=%{bublic}d", ret);
+        DISPLAY_LOGE("BlitGe2dNoAlpha failed. ret=%{public}d", ret);
         return DISPLAY_FAILURE;
     }
 
     ret = BlitGe2dAlpha(dstSurface, dRect);
     if (ret < 0) {
-        DISPLAY_LOGE("BlitGe2dAlpha failed. ret=%{bublic}d", ret);
+        DISPLAY_LOGE("BlitGe2dAlpha failed. ret=%{public}d", ret);
         return DISPLAY_FAILURE;
     }
 
