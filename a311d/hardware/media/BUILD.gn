@@ -14,22 +14,13 @@
 import("//build/ohos.gni")
 import("//build/ohos/ndk/ndk.gni")
 
-ohos_prebuilt_shared_library("libvpcodec") {
-  if (target_cpu == "arm") {
-    source = "lib/libvpcodec.z.so"
-  } else if (target_cpu == "arm64") {
-    source = "lib64/libvpcodec.z.so"
-  }
-  install_enable = true
-  install_images = [ "system" ]
-
-  part_name = "unionman_products"
-}
-
 group("media") {
   deps = [
-    ":libvpcodec",
     "firmware:media_firmware",
+    "libamcodec:libamcodec",
+    "libamplayer:kplayer",
+    "libamvdec:ionplayer",
+    "libvpcodec:libvpcodec",
     "modules:media_modules",
   ]
 }
