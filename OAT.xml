@@ -24,8 +24,14 @@
             <policy name="projectPolicy" desc="">
                 <policyitem type="copyright" name="Unionman Technology Co., Ltd." path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Developed By Unionman"/>
                 <policyitem type="copyright" name="Unionman Co., Ltd." path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Developed By ISCAS"/> 
+                <policyitem type="copyright" name="Amlogic" path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Developed By Amlogic"/> 
+                <policyitem type="copyright" name="Google" path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Developed By Google"/> 
+                <policyitem type="copyright" name="Nokia" path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Developed By Nokia"/> 
+                <policyitem type="copyright" name="contributors" path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Developed By contributors"/> 
+                <policyitem type="license" name="GPL" path=".*" desc="linux kernel adapter codes"/>
+                <policyitem type="license" name="BSD" path=".*" desc="soc codes"/>
                 <policyitem type="license" name="EndUserLicenseAgreement" path=".*" desc="二进制文件遵循的licence"/>          
-	        </policy>
+	    </policy>
         </policylist>
         <filefilterlist>
             <filefilter name="defaultFilter" desc="Files not to check">
@@ -39,8 +45,11 @@
                 <filteritem type="filepath" name="a311d/hardware/gpu/lib64/.*" desc="gpu 64bit libs file"/>
                 <filteritem type="filepath" name="a311d/hardware/gpu/modules/.*" desc="gpu modules file"/>
                 <filteritem type="filepath" name="a311d/hardware/media/firmware/.*" desc="media firmware"/>
-                <filteritem type="filepath" name="a311d/hardware/media/lib/libvpcodec.z.so" desc="media venc lib"/>
-                 <filteritem type="filepath" name="a311d/hardware/media/lib64/libvpcodec.z.so" desc="media 64bit venc lib"/>
+                <filteritem type="filepath" name="a311d/hardware/media/libvpcodec/lib/libvpcodec.z.so" desc="media venc lib"/>
+                <filteritem type="filepath" name="a311d/hardware/media/libvpcodec/lib64/libvpcodec.z.so" desc="media 64bit venc lib"/>
+                <filteritem type="filepath" name="a311d/hardware/media/libamcodec/lib/.*" desc="media codec lib"/>
+                <filteritem type="filepath" name="a311d/hardware/media/libamvdec/lib/.*" desc="media codec lib"/>
+                <filteritem type="filepath" name="a311d/hardware/media/libamplayer/lib/.*" desc="media player lib"/>
                 <filteritem type="filepath" name="a311d/hardware/isp/bin/.*" desc="isp bin file"/>
                 <filteritem type="filepath" name="a311d/hardware/isp/bin64/.*" desc="isp 64bit bin file"/>
                 <filteritem type="filepath" name="a311d/hardware/isp/lib/.*" desc="isp lib file"/>
