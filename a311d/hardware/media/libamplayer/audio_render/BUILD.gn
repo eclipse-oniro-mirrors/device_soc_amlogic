@@ -21,7 +21,7 @@ ohos_shared_library("libamplayer_audio_render") {
   sources = [ "amplayer_audio_render_adapter.cpp" ]
 
   include_dirs = [
-    "//utils/native/base/include",
+    "//commonlibrary/c_utils/base/include",
     "//drivers/peripheral/audio/interfaces/include",
     "//drivers/peripheral/audio/hal/hdi_binder/proxy/include/",
     "//drivers/peripheral/base",
