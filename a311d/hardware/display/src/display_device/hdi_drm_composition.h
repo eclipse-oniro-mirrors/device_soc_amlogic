@@ -55,7 +55,10 @@ public:
     int32_t UpdateMode(std::unique_ptr<DrmModeBlock> &modeBlock, drmModeAtomicReq &pset);
 
 private:
+    int32_t UpdateVideoRect(HdiDrmLayer &videoLayer, HdiDrmLayer &clientLayer);
+    bool IsAmVideoLayer(HdiLayer &hdiLayer);
     int32_t ApplyPlane(HdiDrmLayer &layer, DrmPlane &drmPlane, drmModeAtomicReqPtr pset);
+    HdiDrmLayer *mVideoLayer;
     std::shared_ptr<DrmDevice> mDrmDevice;
     std::shared_ptr<DrmConnector> mConnector;
     std::shared_ptr<DrmCrtc> mCrtc;

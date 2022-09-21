@@ -42,6 +42,12 @@ int32_t DrmPlane::Init(DrmDevice &drmDevice)
     ret = drmDevice.GetPlaneProperty(*this, PROP_CRTC_ID, prop);
     DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("cat not get pane crtc prop id"));
     mPropCrtcId = prop.propId;
+    ret = drmDevice.GetPlaneProperty(*this, PROP_SRC_W, prop);
+    DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("cat not get plane srcw prop id"));
+    mPropSrcWId = prop.propId;
+    ret = drmDevice.GetPlaneProperty(*this, PROP_SRC_H, prop);
+    DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("cat not get plane srch prop id"));
+    mPropSrcHId = prop.propId;
     ret = drmDevice.GetPlaneProperty(*this, PROP_TYPE, prop);
     DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("cat not get pane crtc prop id"));
     switch (prop.value) {

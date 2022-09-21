@@ -20,6 +20,27 @@
 namespace OHOS {
 namespace HDI {
 namespace DISPLAY {
+static int VideoAxisSet(const IRect &rect)
+{
+    const char *path = "/sys/class/video/axis";
+    int fd;
+    char  bcmd[64];
+
+    fd = open(path, O_CREAT | O_RDWR | O_TRUNC, 0644);
+    if (fd >= 0) {
+        snprintf(bcmd, sizeof(bcmd), "%d %d %d %d",
+                rect.x, rect.y, rect.x+rect.w, rect.y+rect.h);
+        DISPLAY_LOGI("Set %s=%s", path, bcmd);
+        write(fd, bcmd, strlen(bcmd));
+        close(fd);
+        return 0;
+    } else {
+        DISPLAY_LOGE("unable to open file %s,err: %s\n", path, strerror(errno));
+    }
+    
+    return -1;
+}
+
 HdiDrmComposition::HdiDrmComposition(std::shared_ptr<DrmConnector> &connector, std::shared_ptr<DrmCrtc> &crtc,
     std::shared_ptr<DrmDevice> &drmDevice)
     : mDrmDevice(drmDevice), mConnector(connector), mCrtc(crtc)
@@ -41,7 +62,44 @@ int32_t HdiDrmComposition::Init()
     DISPLAY_CHK_RETURN((mPrimPlanes.size() == 0), DISPLAY_FAILURE, DISPLAY_LOGE("has no primary plane"));
     mPlanes.insert(mPlanes.end(), mPrimPlanes.begin(), mPrimPlanes.end());
     mPlanes.insert(mPlanes.end(), mOverlayPlanes.begin(), mOverlayPlanes.end());
+    mVideoLayer = nullptr;
     return DISPLAY_SUCCESS;
+}
+
+bool HdiDrmComposition::IsAmVideoLayer(HdiLayer &hdiLayer)
+{
+    HdiLayerBuffer *srcBuffer = hdiLayer.GetCurrentBuffer();
+    
+    static std::set<PixelFormat> formats = {
+        PIXEL_FMT_YUV_422_I,    /* *< YUV422 interleaved format */
+        PIXEL_FMT_YCBCR_422_SP, /* *< YCBCR422 semi-planar format */
+        PIXEL_FMT_YCRCB_422_SP, /* *< YCRCB422 semi-planar format */
+        PIXEL_FMT_YCBCR_420_SP, /* *< YCBCR420 semi-planar format */
+        PIXEL_FMT_YCRCB_420_SP, /* *< YCRCB420 semi-planar format */
+        PIXEL_FMT_YCBCR_422_P,  /* *< YCBCR422 planar format */
+        PIXEL_FMT_YCRCB_422_P,  /* *< YCRCB422 planar format */
+        PIXEL_FMT_YCBCR_420_P,  /* *< YCBCR420 planar format */
+        PIXEL_FMT_YCRCB_420_P,  /* *< YCRCB420 planar format */
+        PIXEL_FMT_YUYV_422_PKG, /* *< YUYV422 packed format */
+        PIXEL_FMT_UYVY_422_PKG, /* *< UYVY422 packed format */
+        PIXEL_FMT_YVYU_422_PKG, /* *< YVYU422 packed format */
+        PIXEL_FMT_VYUY_422_PKG, /* *< VYUY422 packed format */
+    };
+
+    if (srcBuffer == nullptr) {
+        return false;
+    }
+    
+    if (formats.find(static_cast<PixelFormat>(hdiLayer.GetCurrentBuffer()->GetFormat())) == formats.end()) {
+        return false; // not found in formats table.
+    }
+
+    /* amplayer engine submit a layer buffer with size of [1,1] */
+    if (srcBuffer->GetHeight() != 1L || srcBuffer->GetWidth() != 1L) {
+        return false;
+    }
+
+    return true;
 }
 
 int32_t HdiDrmComposition::SetLayers(std::vector<HdiLayer *> &layers, HdiLayer &clientLayer)
@@ -50,6 +108,16 @@ int32_t HdiDrmComposition::SetLayers(std::vector<HdiLayer *> &layers, HdiLayer &
     DISPLAY_LOGD();
     mCompLayers.clear();
     mCompLayers.push_back(&clientLayer);
+
+    mVideoLayer = nullptr;
+    for (auto &layer : layers) {
+        if (IsAmVideoLayer(*layer)) {
+            layer->SetLayerCompositionType(COMPOSITION_VIDEO);
+            mVideoLayer = static_cast<HdiDrmLayer *>(layer);
+            break;
+        }
+    }
+    
     return DISPLAY_SUCCESS;
 }
 
@@ -84,6 +152,22 @@ int32_t HdiDrmComposition::ApplyPlane(HdiDrmLayer &layer, DrmPlane &drmPlane, dr
     DISPLAY_LOGD("set the crtc planeId %{public}d, propId %{public}d, crtcId %{public}d", drmPlane.GetId(),
         drmPlane.GetPropCrtcId(), mCrtc->GetId());
     DISPLAY_CHK_RETURN((ret < 0), DISPLAY_FAILURE, DISPLAY_LOGE("set crtc id fialed errno : %{public}d", errno));
+
+    // set src_w
+    HdiLayerBuffer *layerBuffer = layer.GetCurrentBuffer();
+    ret = drmModeAtomicAddProperty(pset, drmPlane.GetId(), drmPlane.GetPropSrcWId(),
+        (uint32_t)layerBuffer->GetWidth() << 16U);
+    DISPLAY_LOGD("set the src_w planeId %{public}d, propId %{public}d, src_w %{public}d", drmPlane.GetId(),
+        drmPlane.GetPropSrcWId(), layerBuffer->GetWidth());
+    DISPLAY_CHK_RETURN((ret < 0), DISPLAY_FAILURE, DISPLAY_LOGE("set src_w fialed errno : %{public}d", errno));
+
+    // set src_h
+    ret = drmModeAtomicAddProperty(pset, drmPlane.GetId(), drmPlane.GetPropSrcHId(),
+        (uint32_t)layerBuffer->GetHeight() << 16U);
+    DISPLAY_LOGD("set the src_h planeId %{public}d, propId %{public}d, src_h %{public}d", drmPlane.GetId(),
+        drmPlane.GetPropSrcHId(), layerBuffer->GetHeight());
+    DISPLAY_CHK_RETURN((ret < 0), DISPLAY_FAILURE, DISPLAY_LOGE("set src_h fialed errno : %{public}d", errno));
+
     return DISPLAY_SUCCESS;
 }
 
@@ -118,6 +202,28 @@ int32_t HdiDrmComposition::UpdateMode(std::unique_ptr<DrmModeBlock> &modeBlock, 
     return DISPLAY_SUCCESS;
 }
 
+int32_t HdiDrmComposition::UpdateVideoRect(HdiDrmLayer &videoLayer, HdiDrmLayer &clientLayer)
+{
+    DrmMode mode;
+    int32_t ret = mConnector->GetModeFromId(mCrtc->GetActiveModeId(), mode);
+    DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE,
+        DISPLAY_LOGE("can not get the mode from id %{public}d", mCrtc->GetActiveModeId()));
+        
+    int32_t dstWidth = mode.GetModeInfoPtr()->hdisplay;
+    int32_t dstHeight = mode.GetModeInfoPtr()->vdisplay;
+    HdiLayerBuffer *dstBuffer = clientLayer.GetCurrentBuffer();
+    int32_t srcWidth = dstBuffer->GetWidth();
+    int32_t srcHeight = dstBuffer->GetHeight();
+    IRect rect = videoLayer.GetLayerDisplayRect();
+    
+    rect.x = rect.x * dstWidth / srcWidth;
+    rect.y = rect.y * dstHeight / srcHeight;
+    rect.w = rect.w * dstWidth / srcWidth;
+    rect.h = rect.h * dstHeight / srcHeight;
+    
+    return VideoAxisSet(rect);
+}
+
 int32_t HdiDrmComposition::Apply(bool modeSet)
 {
     uint64_t crtcOutFence = -1;
@@ -150,13 +256,21 @@ int32_t HdiDrmComposition::Apply(bool modeSet)
             break;
         }
     }
+
+    if (mCompLayers.size() > 0 && mVideoLayer != nullptr) {
+        HdiDrmLayer *clientLayer = static_cast<HdiDrmLayer *>(mCompLayers[0]);
+        UpdateVideoRect(*mVideoLayer, *clientLayer);
+        mVideoLayer = nullptr;
+    }
+    
     ret = UpdateMode(modeBlock, *(atomicReqPtr.Get()));
     DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("update mode failed"));
     uint32_t flags = DRM_MODE_ATOMIC_ALLOW_MODESET;
 
     ret = drmModeAtomicCommit(drmFd, atomicReqPtr.Get(), flags, nullptr);
     DISPLAY_CHK_RETURN((ret != 0), DISPLAY_FAILURE,
-        DISPLAY_LOGE("drmModeAtomicCommit failed %{public}d errno %{public}d", ret, errno));
+        DISPLAY_LOGE("drmModeAtomicCommit failed %{public}d errno %{public}d, %{public}s",
+            ret, errno, strerror(errno)));
     // set the release fence
     for (auto layer : mCompLayers) {
         layer->SetReleaseFence(dup(static_cast<int32_t>(crtcOutFence)));

@@ -28,6 +28,9 @@ const std::string PROP_FBID = "FB_ID";
 const std::string PROP_IN_FENCE_FD = "IN_FENCE_FD";
 const std::string PROP_CRTC_ID = "CRTC_ID";
 const std::string PROP_TYPE = "type";
+const std::string PROP_SRC_W = "SRC_W";
+const std::string PROP_SRC_H = "SRC_H";
+
 class DrmDevice;
 
 class DrmPlane {
@@ -59,6 +62,14 @@ public:
     {
         return mType;
     }
+    uint32_t GetPropSrcWId() const
+    {
+        return mPropSrcWId;
+    }
+    uint32_t GetPropSrcHId() const
+    {
+        return mPropSrcHId;
+    }
     void BindToPipe(uint32_t pipe)
     {
         mPipe = pipe;
@@ -80,6 +91,8 @@ private:
     uint32_t mPropCrtcId = 0;
     uint32_t mPipe = 0;
     uint32_t mType = 0;
+    uint32_t mPropSrcWId = 0;
+    uint32_t mPropSrcHId = 0;
     std::vector<uint32_t> mFormats;
 };
 } // namespace OHOS
