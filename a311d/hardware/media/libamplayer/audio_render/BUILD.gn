@@ -37,8 +37,10 @@ ohos_shared_library("libamplayer_audio_render") {
   deps = [ "//foundation/multimedia/audio_framework/frameworks/native/hdiadapter/sink:audio_renderer_sink" ]
 
   external_deps = [
+    "c_utils:utils",
     "hiviewdfx_hilog_native:libhilog",
     "ipc:ipc_core",
+    "power_manager:powermgr_client",
   ]
 
   cflags = [
