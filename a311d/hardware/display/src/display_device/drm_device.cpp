@@ -190,7 +190,7 @@ void DrmDevice::FindAllConnector(const drmModeResPtr &res)
     int ret;
     for (int i = 0; i < res->count_connectors; i++) {
         drmModeConnectorPtr connector = drmModeGetConnector(GetDrmFd(), res->connectors[i]);
-        if (!connector) {
+        if (!connector || connector->connection != DRM_MODE_CONNECTED) {
             DISPLAY_LOGE("can not get connector mode %{public}d", i);
             continue;
         }
