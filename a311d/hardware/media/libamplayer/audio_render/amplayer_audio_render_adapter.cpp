@@ -24,6 +24,7 @@
 #include <condition_variable>
 #include "errors.h"
 #include "media_log.h"
+#include "audio_info.h"
 #include "audio_renderer_sink.h"
 
 #include "audio_external_render.h"
