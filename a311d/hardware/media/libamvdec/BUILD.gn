@@ -15,7 +15,7 @@ import("//build/ohos.gni")
 
 ohos_prebuilt_shared_library("libamvdec") {
   source = "lib/libamvdec.so"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
   subsystem_name = "unionman_products"
   part_name = "unionman_products"
 }
@@ -23,7 +23,7 @@ ohos_prebuilt_shared_library("libamvdec") {
 ohos_executable("ionplayer") {
   install_enable = true
   sources = [ "samples/ionplayer.c" ]
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
 
   cflags = [
     "-fno-rtti",

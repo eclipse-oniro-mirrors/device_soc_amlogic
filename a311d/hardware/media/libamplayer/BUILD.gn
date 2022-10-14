@@ -15,7 +15,7 @@ import("//build/ohos.gni")
 
 ohos_prebuilt_shared_library("libamplayer") {
   source = "lib/libamplayer.so"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
   subsystem_name = "unionman_products"
   part_name = "unionman_products"
 }
@@ -23,7 +23,7 @@ ohos_prebuilt_shared_library("libamplayer") {
 ohos_executable("kplayer") {
   install_enable = true
   sources = [ "samples/kplayer.c" ]
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
 
   cflags = [
     "-fno-rtti",
