@@ -33,7 +33,7 @@ ohos_prebuilt_etc("libc.so.6") {
     source = "lib64/libc.so.6"
     module_install_dir = "lib64/glibc"
   }
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
 
   part_name = "unionman_products"
   install_enable = true
@@ -47,7 +47,7 @@ ohos_prebuilt_etc("libdl.so.2") {
     source = "lib64/libdl.so.2"
     module_install_dir = "lib64/glibc"
   }
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
 
   part_name = "unionman_products"
   install_enable = true
@@ -61,7 +61,7 @@ ohos_prebuilt_etc("libpthread.so.0") {
     source = "lib64/libpthread.so.0"
     module_install_dir = "lib64/glibc"
   }
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
 
   part_name = "unionman_products"
   install_enable = true
@@ -83,7 +83,7 @@ ohos_prebuilt_executable("ld-linux.so") {
 ohos_prebuilt_executable("libstdc++.so.6.0") {
   source = "lib64/libstdc++.so.6.0"
   module_install_dir = "lib64/glibc"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
   symlink_target_name = [ "libstdc++.so.6" ]
 
   part_name = "unionman_products"
@@ -93,7 +93,7 @@ ohos_prebuilt_executable("libstdc++.so.6.0") {
 ohos_prebuilt_executable("libgcc_s.so.1") {
   source = "lib64/libgcc_s.so.1"
   module_install_dir = "lib64/glibc"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
 
   part_name = "unionman_products"
   install_enable = true
@@ -102,7 +102,7 @@ ohos_prebuilt_executable("libgcc_s.so.1") {
 ohos_prebuilt_executable("librt.so.6") {
   source = "lib64/librt.so.6"
   module_install_dir = "lib64/glibc"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
   symlink_target_name = [ "librt.so.1" ]
 
   part_name = "unionman_products"
@@ -112,7 +112,7 @@ ohos_prebuilt_executable("librt.so.6") {
 ohos_prebuilt_executable("libm.so.6") {
   source = "lib64/libm.so.6"
   module_install_dir = "lib64/glibc"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
 
   part_name = "unionman_products"
   install_enable = true
@@ -121,7 +121,7 @@ ohos_prebuilt_executable("libm.so.6") {
 ohos_prebuilt_etc("iv009_isp.ko") {
   source = "modules/iv009_isp.ko"
   module_install_dir = "modules"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
 
   part_name = "unionman_products"
 }
@@ -129,7 +129,7 @@ ohos_prebuilt_etc("iv009_isp.ko") {
 ohos_prebuilt_etc("iv009_isp_iq.ko") {
   source = "modules/iv009_isp_iq.ko"
   module_install_dir = "modules"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
 
   part_name = "unionman_products"
 }
@@ -137,7 +137,7 @@ ohos_prebuilt_etc("iv009_isp_iq.ko") {
 ohos_prebuilt_etc("iv009_isp_lens.ko") {
   source = "modules/iv009_isp_lens.ko"
   module_install_dir = "modules"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
 
   part_name = "unionman_products"
 }
@@ -145,7 +145,7 @@ ohos_prebuilt_etc("iv009_isp_lens.ko") {
 ohos_prebuilt_etc("iv009_isp_sensor.ko") {
   source = "modules/iv009_isp_sensor.ko"
   module_install_dir = "modules"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
 
   part_name = "unionman_products"
 }

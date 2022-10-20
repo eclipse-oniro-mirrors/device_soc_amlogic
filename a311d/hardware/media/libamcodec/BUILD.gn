@@ -15,7 +15,7 @@ import("//build/ohos.gni")
 
 ohos_prebuilt_shared_library("libamcodec") {
   source = "lib/libamcodec.so"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
   subsystem_name = "unionman_products"
   part_name = "unionman_products"
 
@@ -27,14 +27,14 @@ ohos_prebuilt_shared_library("libamcodec") {
 
 ohos_prebuilt_shared_library("libammad") {
   source = "lib/libammad.so"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
   subsystem_name = "unionman_products"
   part_name = "unionman_products"
 }
 
 ohos_prebuilt_shared_library("libfaad-aml") {
   source = "lib/libfaad-aml.so"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
   subsystem_name = "unionman_products"
   part_name = "unionman_products"
 }

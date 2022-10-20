@@ -16,7 +16,7 @@ import("//build/ohos.gni")
 ohos_shared_library("libamplayer_audio_render") {
   install_enable = true
 
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
 
   sources = [ "amplayer_audio_render_adapter.cpp" ]
 
