@@ -51,8 +51,8 @@ static int audio_render_init(struct audio_render_s *r)
     int32_t ret;
 
     sample_attrs.adapterName = "primary";
-    sample_attrs.format = AUDIO_FORMAT_PCM_16_BIT;
-    sample_attrs.sampleFmt = AUDIO_FORMAT_PCM_16_BIT;
+    sample_attrs.format = AUDIO_FORMAT_TYPE_PCM_16_BIT;
+    sample_attrs.sampleFmt = AUDIO_FORMAT_TYPE_PCM_16_BIT;
     sample_attrs.sampleRate = 48000;
     sample_attrs.channel = 2;
     sample_attrs.volume = 1.0;
