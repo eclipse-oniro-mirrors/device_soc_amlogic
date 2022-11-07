@@ -26,6 +26,7 @@
 #include "media_log.h"
 #include "audio_info.h"
 #include "audio_renderer_sink.h"
+#include "audio_types.h"
 
 #include "audio_external_render.h"
 
@@ -44,14 +45,11 @@ AudioRendererSink *g_audioRendrSinkInstance = AudioRendererSink::GetInstance();
 static int audio_render_init(struct audio_render_s *r)
 {
     MEDIA_LOGD("%{public}s() in", __func__);
-
-    CHECK_AND_RETURN_RET(!g_audioRendrSinkInstance->rendererInited_, 0);
-
-    AudioSinkAttr sample_attrs;
+    IAudioSinkAttr sample_attrs;
     int32_t ret;
 
     sample_attrs.adapterName = "primary";
-    sample_attrs.format = AUDIO_FORMAT_TYPE_PCM_16_BIT;
+    sample_attrs.format = SAMPLE_S16LE;
     sample_attrs.sampleFmt = AUDIO_FORMAT_TYPE_PCM_16_BIT;
     sample_attrs.sampleRate = 48000;
     sample_attrs.channel = 2;
@@ -70,8 +68,6 @@ static int audio_render_finalize(struct audio_render_s *r)
 {
     MEDIA_LOGD("%{public}s() in", __func__);
 
-    CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->rendererInited_, -1);
-
     g_audioRendrSinkInstance->Stop();
     g_audioRendrSinkInstance->DeInit();
 
@@ -81,8 +77,6 @@ static int audio_render_finalize(struct audio_render_s *r)
 static int audio_render_config(struct audio_render_s *r, uint32_t channels,
                                uint32_t bits_per_sample, uint32_t sample_rate)
 {
-    CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->rendererInited_, -1);
-
     MEDIA_LOGD("audio_render_config in, channels:%{public}d, sampleRate:%{public}d", channels, sample_rate);
 
     return 0;
@@ -90,7 +84,6 @@ static int audio_render_config(struct audio_render_s *r, uint32_t channels,
 
 static int audio_render_write(struct audio_render_s *r, uint8_t *data, uint32_t size)
 {
-    CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->rendererInited_, -1);
     MEDIA_LOGD("%{public}s() size=%{public}u", __func__, size);
     uint64_t writeLen = 0;
     CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->RenderFrame(*((char *)data), size, writeLen) == 0, -1);
@@ -101,7 +94,6 @@ static int audio_render_start(struct audio_render_s *r)
 {
     MEDIA_LOGD("%{public}s() in", __func__);
 
-    CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->rendererInited_, -1);
     CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->Start() == 0, -1);
     return 0;
 }
@@ -110,7 +102,6 @@ static int audio_render_stop(struct audio_render_s *r)
 {
     MEDIA_LOGD("%{public}s() in", __func__);
 
-    CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->rendererInited_, -1);
     CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->Stop() == 0, -1);
     return 0;
 }
@@ -119,7 +110,6 @@ static int audio_render_pause(struct audio_render_s *r)
 {
     MEDIA_LOGD("%{public}s() in", __func__);
 
-    CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->rendererInited_, -1);
     CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->Pause() == 0, -1);
     return 0;
 }
@@ -128,7 +118,6 @@ static int audio_render_resume(struct audio_render_s *r)
 {
     MEDIA_LOGD("%{public}s() in", __func__);
 
-    CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->rendererInited_, -1);
     CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->Resume() == 0, -1);
     return 0;
 }
@@ -165,7 +154,6 @@ static uint32_t audio_render_get_latency(struct audio_render_s *r)
 {
     uint32_t latency;
 
-    CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->rendererInited_, -1);
     // CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->GetLatency(&latency) == 0, -1);
     latency = get_latency_from_driver(r);
 
@@ -175,8 +163,6 @@ static uint32_t audio_render_get_latency(struct audio_render_s *r)
 static int audio_render_set_mute(struct audio_render_s *r, int mute)
 {
     MEDIA_LOGD("%{public}s() in. mute=%{public}d", __func__, mute);
-
-    CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->rendererInited_, -1);
     return 0;
 }
 
@@ -184,7 +170,6 @@ static int audio_render_set_volume(struct audio_render_s *r, float volume)
 {
     MEDIA_LOGD("%{public}s() in. volume=%{public}f", __func__, volume);
 
-    CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->rendererInited_, -1);
     CHECK_AND_RETURN_RET(g_audioRendrSinkInstance->SetVolume(volume, volume) == 0, -1);
     return 0;
 }
