@@ -80,42 +80,44 @@ ohos_prebuilt_executable("ld-linux.so") {
   install_enable = true
 }
 
-ohos_prebuilt_executable("libstdc++.so.6.0") {
-  source = "lib64/libstdc++.so.6.0"
-  module_install_dir = "lib64/glibc"
-  install_images = [ chipset_base_dir ]
-  symlink_target_name = [ "libstdc++.so.6" ]
+if (target_cpu == "arm64") {
+  ohos_prebuilt_executable("libstdc") {
+    source = "lib64/libstdc++.so.6.0"
+    module_install_dir = "lib64/glibc"
+    install_images = [ chipset_base_dir ]
+    symlink_target_name = [ "libstdc++.so.6" ]
 
-  part_name = "unionman_products"
-  install_enable = true
-}
+    part_name = "unionman_products"
+    install_enable = true
+  }
 
-ohos_prebuilt_executable("libgcc_s.so.1") {
-  source = "lib64/libgcc_s.so.1"
-  module_install_dir = "lib64/glibc"
-  install_images = [ chipset_base_dir ]
+  ohos_prebuilt_executable("libgcc_s") {
+    source = "lib64/libgcc_s.so.1"
+    module_install_dir = "lib64/glibc"
+    install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
-  install_enable = true
-}
+    part_name = "unionman_products"
+    install_enable = true
+  }
 
-ohos_prebuilt_executable("librt.so.6") {
-  source = "lib64/librt.so.6"
-  module_install_dir = "lib64/glibc"
-  install_images = [ chipset_base_dir ]
-  symlink_target_name = [ "librt.so.1" ]
+  ohos_prebuilt_executable("librt") {
+    source = "lib64/librt.so.6"
+    module_install_dir = "lib64/glibc"
+    install_images = [ chipset_base_dir ]
+    symlink_target_name = [ "librt.so.1" ]
 
-  part_name = "unionman_products"
-  install_enable = true
-}
+    part_name = "unionman_products"
+    install_enable = true
+  }
 
-ohos_prebuilt_executable("libm.so.6") {
-  source = "lib64/libm.so.6"
-  module_install_dir = "lib64/glibc"
-  install_images = [ chipset_base_dir ]
+  ohos_prebuilt_executable("libm") {
+    source = "lib64/libm.so.6"
+    module_install_dir = "lib64/glibc"
+    install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
-  install_enable = true
+    part_name = "unionman_products"
+    install_enable = true
+  }
 }
 
 ohos_prebuilt_etc("iv009_isp.ko") {
@@ -165,10 +167,10 @@ group("isp") {
 
   if (target_cpu == "arm64") {
     deps += [
-      ":libgcc_s.so.1",
-      ":libm.so.6",
-      ":librt.so.6",
-      ":libstdc++.so.6.0",
+      ":libgcc_s",
+      ":libm",
+      ":librt",
+      ":libstdc",
     ]
   }
 }
