@@ -35,7 +35,6 @@ ohos_shared_library("libamplayer_audio_render") {
     "//foundation/graphic/graphic_2d/frameworks/surface:surface_public_config",
     "//foundation/multimedia/player_framework/services/utils:media_service_utils_public_config",
   ]
-  deps = [ "//foundation/multimedia/audio_framework/frameworks/native/hdiadapter/sink:audio_renderer_sink" ]
 
   external_deps = [
     "c_utils:utils",

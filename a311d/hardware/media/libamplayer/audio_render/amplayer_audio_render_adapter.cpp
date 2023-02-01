@@ -22,6 +22,7 @@
 #include <thread>
 #include <map>
 #include <condition_variable>
+#include <dlfcn.h>
 #include "errors.h"
 #include "media_log.h"
 #include "audio_info.h"
@@ -40,13 +41,38 @@ namespace OHOS
 namespace AudioStandard
 {
 
-AudioRendererSink *g_audioRendrSinkInstance = AudioRendererSink::GetInstance();
+AudioRendererSink *g_audioRendrSinkInstance = nullptr;
 
 static int audio_render_init(struct audio_render_s *r)
 {
     MEDIA_LOGD("%{public}s() in", __func__);
     IAudioSinkAttr sample_attrs;
     int32_t ret;
+  #ifdef __aarch64__
+    char resolvedPath[100] = "/system/lib64/libaudio_renderer_sink.z.so";
+  #else
+    char resolvedPath[100] = "/system/lib/libaudio_renderer_sink.z.so";
+  #endif
+    AudioRendererSink *(*GetInstance)() = nullptr;
+
+    void *handle_ = dlopen(resolvedPath, 1);
+    if (handle_ == nullptr) {
+        MEDIA_LOGE("Open so Fail");
+        return -1;
+    }
+    MEDIA_LOGI("dlopen successful");
+
+    GetInstance = (AudioRendererSink *(*)())(dlsym(handle_, "_ZN4OHOS13AudioStandard17AudioRendererSink11GetInstanceEv"));
+    if (GetInstance == nullptr) {
+        return -1;
+    }
+    MEDIA_LOGI("GetInstance done");
+
+    g_audioRendrSinkInstance = GetInstance();
+    if (g_audioRendrSinkInstance == nullptr) {
+        return -1;
+    }
+    MEDIA_LOGI("audioRendrSinkInstance created");
 
     sample_attrs.adapterName = "primary";
     sample_attrs.format = SAMPLE_S16LE;
