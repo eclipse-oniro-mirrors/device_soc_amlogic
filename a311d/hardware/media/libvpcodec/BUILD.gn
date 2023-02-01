@@ -21,7 +21,7 @@ ohos_prebuilt_shared_library("libvpcodec") {
     source = "lib64/libvpcodec.z.so"
   }
   install_enable = true
-  install_images = [ "system" ]
+  install_images = [ chipset_base_dir ]
 
   part_name = "unionman_products"
 }
