@@ -263,7 +263,7 @@ static void InitBufferHandle(struct gbm_bo *bo, int fd, const AllocInfo *info, P
     bufferHandle->usage = info->usage;
     bufferHandle->format = info->format;
     bufferHandle->virAddr = NULL;
-    bufferHandle->size = hdi_gbm_bo_get_stride(bo) * hdi_gbm_bo_get_height(bo);
+    bufferHandle->size = hdi_gbm_bo_get_size(bo);
 }
 
 int32_t GbmAllocMem(const AllocInfo *info, BufferHandle **buffer)
