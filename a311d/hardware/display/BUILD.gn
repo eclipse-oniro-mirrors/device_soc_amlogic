@@ -48,8 +48,6 @@ ohos_shared_library("display_gralloc") {
     "include",
     "//drivers/peripheral/display/interfaces/include",
     "//drivers/peripheral/base",
-    "//drivers/framework/include/utils",
-    "//drivers/adapter/uhdf2/osal/include",
     "//commonlibrary/c_utils/base/include",
     "//foundation/graphic/standard/utils/include",
     "//foundation/graphic/standard/prebuilts/librarys/drm/include",
@@ -83,8 +81,6 @@ ohos_shared_library("display_gfx") {
     "include",
     "//drivers/peripheral/display/interfaces/include",
     "//drivers/peripheral/base",
-    "//drivers/framework/include/utils",
-    "//drivers/adapter/uhdf2/adapter/osal/include/",
     "//commonlibrary/c_utils/base/include",
     "//foundation/graphic/standard/utils/include",
     "//base/hiviewdfx/interfaces/innerkits/libhilog/include",
@@ -99,6 +95,7 @@ ohos_shared_library("display_gfx") {
 
   external_deps = [
     "c_utils:utils",
+    "hdf_core:libhdf_utils",
     "hiviewdfx_hilog_native:libhilog",
   ]
 
@@ -139,8 +136,6 @@ ohos_shared_library("display_device") {
     "include",
     "//drivers/peripheral/display/interfaces/include",
     "//drivers/peripheral/base",
-    "//drivers/framework/include/utils",
-    "//drivers/adapter/uhdf2/osal/include",
     "//commonlibrary/c_utils/base/include",
     "//foundation/graphic/standard/utils/include",
     "//foundation/graphic/standard/prebuilts/librarys/drm/include",
