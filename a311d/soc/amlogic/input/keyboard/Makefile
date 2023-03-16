@@ -14,10 +14,10 @@ ccflags-$(CONFIG_DRIVERS_HDF_INPUT) += $(HDF_ROOT_DIR)/framework/model/input/dri
              $(HDF_ROOT_DIR)/framework/include/osal \
              $(HDF_ROOT_DIR)/framework/ability/sbuf/include \
              $(HDF_ROOT_DIR)/khdf/osal/include \
-             $(srctree)/drivers/hdf/inner_api/osal/shared \
-             $(srctree)/drivers/hdf/inner_api/host/shared \
-             $(srctree)/drivers/hdf/inner_api/utils \
-             $(srctree)/drivers/hdf/inner_api/core \
+             $(HDF_ROOT_DIR)/inner_api/osal/shared \
+             $(HDF_ROOT_DIR)/inner_api/host/shared \
+             $(HDF_ROOT_DIR)/inner_api/utils \
+             $(HDF_ROOT_DIR)/inner_api/core \
              $(HDF_ROOT_DIR)/evdev
 endif
 
