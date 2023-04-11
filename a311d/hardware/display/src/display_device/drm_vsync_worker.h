@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2023 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -19,8 +19,7 @@
 #include <mutex>
 #include <thread>
 #include <condition_variable>
-#include "display_device.h"
-#include "hdi_display.h"
+#include "hdi_device_common.h"
 
 namespace OHOS {
 namespace HDI {

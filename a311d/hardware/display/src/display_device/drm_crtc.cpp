@@ -14,7 +14,7 @@
  */
 
 #include "drm_crtc.h"
-#include "display_common.h"
+#include "display_log.h"
 #include "drm_device.h"
 
 namespace OHOS {

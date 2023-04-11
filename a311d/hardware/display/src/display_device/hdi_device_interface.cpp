@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2023 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,9 +15,9 @@
 
 #include "hdi_device_interface.h"
 #include <vector>
-#include "display_common.h"
+#include "display_log.h"
 #include "drm_device.h"
-#include "fb_device.h"
+
 namespace OHOS {
 namespace HDI {
 namespace DISPLAY {
@@ -35,16 +35,6 @@ std::vector<std::shared_ptr<HdiDeviceInterface>> HdiDeviceInterface::DiscoveryDe
             return devices;
         } else {
             DISPLAY_LOGE("drm device init failed");
-        }
-    }
-    std::shared_ptr<HdiDeviceInterface> fbDevice = FbDevice::Create();
-    if (fbDevice != nullptr) {
-        ret = fbDevice->Init();
-        if (ret == DISPLAY_SUCCESS) {
-            DISPLAY_LOGD("fd device init success");
-            devices.push_back(std::move(fbDevice));
-        } else {
-            DISPLAY_LOGE("fd device init failed");
         }
     }
     return devices;

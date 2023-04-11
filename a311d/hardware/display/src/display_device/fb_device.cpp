@@ -19,7 +19,7 @@
 #include <memory>
 #include <securec.h>
 #include <string>
-#include "display_common.h"
+#include "display_log.h"
 #include "fb_display.h"
 #include "display_adapter.h"
 namespace OHOS {
