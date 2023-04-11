@@ -20,7 +20,7 @@
 #include <cerrno>
 #include <securec.h>
 #include <linux/fb.h>
-#include "display_common.h"
+#include "display_log.h"
 #include "hdi_gfx_composition.h"
 #include "fb_composition.h"
 #include "sorft_vsync.h"

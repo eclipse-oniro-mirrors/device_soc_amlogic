@@ -15,7 +15,7 @@
 
 #include "hdi_display.h"
 #include <vector>
-#include "display_common.h"
+#include "display_log.h"
 
 namespace OHOS {
 namespace HDI {
@@ -114,7 +114,7 @@ std::unique_ptr<HdiLayer> HdiDisplay::CreateHdiLayer(LayerType type)
 }
 
 
-int32_t HdiDisplay::CloseLayer(uint32_t layerId)
+int32_t HdiDisplay::DestroyLayer(uint32_t layerId)
 {
     DISPLAY_LOGD("layerId %{public}d", layerId);
     auto iter = mLayersMap.find(layerId);

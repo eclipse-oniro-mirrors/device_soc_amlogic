@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2023 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -20,13 +20,16 @@
 #include <memory>
 #include <queue>
 #include "buffer_handle.h"
-#include "display_common.h"
+#include "display_log.h"
+#include "v1_0/display_composer_type.h"
 #include "hdi_device_common.h"
 #include "hdi_fd.h"
 
 namespace OHOS {
 namespace HDI {
 namespace DISPLAY {
+using namespace OHOS::HDI::Display::Composer::V1_0;
+const uint32_t FENCE_TIMEOUT = 3000;
 struct HdiLayerBuffer {
 public:
     explicit HdiLayerBuffer(const BufferHandle &hdl);
@@ -63,8 +66,6 @@ public:
     BufferHandle mHandle;
 
 private:
-    HdiLayerBuffer(const HdiLayerBuffer &rhs);
-    HdiLayerBuffer& operator=(const HdiLayerBuffer &rhs);
     uint64_t mPhyAddr = 0;
     int32_t mHeight = 0;
     int32_t mWidth = 0;
@@ -157,12 +158,13 @@ public:
 
     void SetPixel(const BufferHandle &handle, int x, int y, uint32_t color);
 
-    virtual int32_t SetLayerSize(IRect *rect);
+    void WaitAcquireFence();
+    virtual int32_t SetLayerRegion(IRect *rect);
     virtual int32_t SetLayerCrop(IRect *rect);
     virtual void SetLayerZorder(uint32_t zorder);
     virtual int32_t SetLayerPreMulti(bool preMul);
     virtual int32_t SetLayerAlpha(LayerAlpha *alpha);
-    virtual int32_t SetTransformMode(TransformType type);
+    virtual int32_t SetLayerTransformMode(TransformType type);
     virtual int32_t SetLayerDirtyRegion(IRect *region);
     virtual int32_t SetLayerVisibleRegion(uint32_t num, IRect *rect);
     virtual int32_t SetLayerBuffer(const BufferHandle *buffer, int32_t fence);
@@ -173,7 +175,7 @@ public:
     {
         return mHdiBuffer.get();
     }
-    virtual ~HdiLayer();
+    virtual ~HdiLayer() {}
 
 private:
     static uint32_t GetIdleId();
@@ -190,6 +192,7 @@ private:
     uint32_t mZorder = -1;
     bool mPreMul = false;
     LayerAlpha mAlpha;
+    int32_t mFenceTimeOut = FENCE_TIMEOUT;
     TransformType mTransformType;
     CompositionType mCompositionType = COMPOSITION_CLIENT;
     CompositionType mDeviceSelect = COMPOSITION_CLIENT;

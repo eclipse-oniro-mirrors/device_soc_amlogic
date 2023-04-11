@@ -15,7 +15,7 @@
 
 #include "drm_vsync_worker.h"
 #include <chrono>
-#include "display_common.h"
+#include "display_log.h"
 #include "drm_device.h"
 
 namespace OHOS {

@@ -17,7 +17,8 @@
 #define HDI_FD_H
 #include <fcntl.h>
 #include <memory>
-#include "display_common.h"
+#include <unistd.h>
+#include "display_log.h"
 
 namespace OHOS {
 namespace HDI {

@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/mman.h>
-#include "display_common.h"
+#include "display_log.h"
 #include "display_gralloc.h"
 #include "securec.h"
 #include "aml_ge2d.h"

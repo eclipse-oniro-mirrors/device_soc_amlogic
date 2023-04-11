@@ -16,7 +16,6 @@
 #ifndef HDI_VIDEO_COMPOSITION_H
 #define HDI_VIDEO_COMPOSITION_H
 #include <unordered_map>
-#include "display_layer.h"
 #include "hdi_composer.h"
 namespace OHOS {
 namespace HDI {
