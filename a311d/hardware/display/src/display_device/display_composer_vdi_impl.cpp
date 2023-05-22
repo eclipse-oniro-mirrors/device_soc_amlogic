@@ -339,6 +339,21 @@ int32_t DisplayComposerVdiImpl::SetLayerBlendType(uint32_t devId, uint32_t layer
     return HDF_SUCCESS;
 }
 
+int32_t DisplayComposerVdiImpl::SetLayerMaskInfo(uint32_t devId, uint32_t layerId, const MaskInfo maskInfo)
+{
+    DISPLAY_LOGE("%s is not supported", __func__);
+    return HDF_ERR_NOT_SUPPORT;
+}
+
+int32_t DisplayComposerVdiImpl::SetLayerColor(uint32_t devId, uint32_t layerId, const LayerColor& layerColor)
+{
+    CHECK_NULLPOINTER_RETURN_VALUE(composerModel_, HDF_FAILURE);
+    DISPLAY_LOGE("%s layerColor: r=%{public}d, g=%{public}d, b=%{public}d, a=%{public}d",
+        __func__, layerColor.r, layerColor.g, layerColor.b, layerColor.a);
+    DISPLAY_LOGE("%s is not supported", __func__);
+    return HDF_ERR_NOT_SUPPORT;
+}
+
 extern "C" IDisplayComposerVdi *CreateComposerVdi()
 {
     return new DisplayComposerVdiImpl();
