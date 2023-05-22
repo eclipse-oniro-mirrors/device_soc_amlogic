@@ -70,6 +70,8 @@ public:
         const BufferHandle& buffer, int32_t fence) override;
     virtual int32_t SetLayerCompositionType(uint32_t devId, uint32_t layerId, CompositionType type) override;
     virtual int32_t SetLayerBlendType(uint32_t devId, uint32_t layerId, BlendType type) override;
+    virtual int32_t SetLayerMaskInfo(uint32_t devId, uint32_t layerId, const MaskInfo maskInfo) override;
+    virtual int32_t SetLayerColor(uint32_t devId, uint32_t layerId, const LayerColor& layerColor) override;
 private:
     std::shared_ptr<HdiSession> composerModel_;
 };
