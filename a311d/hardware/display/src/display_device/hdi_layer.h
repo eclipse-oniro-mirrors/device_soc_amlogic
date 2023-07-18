@@ -175,7 +175,10 @@ public:
     {
         return mHdiBuffer.get();
     }
-    virtual ~HdiLayer() {}
+    virtual ~HdiLayer()
+    {
+        mIdSets.erase(mId);
+    }
 
 private:
     static uint32_t GetIdleId();
