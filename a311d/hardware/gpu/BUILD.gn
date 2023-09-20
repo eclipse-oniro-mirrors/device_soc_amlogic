@@ -26,7 +26,7 @@ ohos_prebuilt_shared_library("libgbm.so.1") {
   install_images = [ chipset_base_dir ]
   relative_install_dir = "chipsetsdk"
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
   install_enable = true
   public_configs = [ ":mesa3d-common_config" ]
 }
@@ -44,7 +44,7 @@ ohos_prebuilt_shared_library("libEGL.so.1") {
     "libEGL_impl.so",
   ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
   install_enable = true
   public_configs = [ ":mesa3d-common_config" ]
 }
@@ -58,7 +58,7 @@ ohos_prebuilt_shared_library("libglapi.so.0") {
   install_images = [ chipset_base_dir ]
   relative_install_dir = "chipsetsdk"
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
   install_enable = true
   public_configs = [ ":mesa3d-common_config" ]
 }
@@ -76,7 +76,7 @@ ohos_prebuilt_shared_library("libGLESv1_CM.so.1") {
     "libGLESv1_impl.so",
   ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
   install_enable = true
   public_configs = [ ":mesa3d-common_config" ]
 }
@@ -96,7 +96,7 @@ ohos_prebuilt_shared_library("libGLESv2.so.2") {
     "libGLESv3_impl.so",
   ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
   install_enable = true
   public_configs = [ ":mesa3d-common_config" ]
 }
@@ -125,7 +125,7 @@ ohos_prebuilt_shared_library("libgallium_dri.so") {
     "meson_dri.so",
   ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("gpu-sched.ko") {
@@ -133,7 +133,7 @@ ohos_prebuilt_etc("gpu-sched.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("panfrost.ko") {
@@ -141,7 +141,7 @@ ohos_prebuilt_etc("panfrost.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 group("gpu") {

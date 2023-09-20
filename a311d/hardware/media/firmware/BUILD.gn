@@ -18,7 +18,7 @@ ohos_prebuilt_etc("h264_enc_bin") {
   module_install_dir = "lib/firmware/video"
   install_images = [ "system" ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("video_ucode_bin") {
@@ -26,7 +26,7 @@ ohos_prebuilt_etc("video_ucode_bin") {
   module_install_dir = "lib/firmware/video"
   install_images = [ "system" ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 group("media_firmware") {

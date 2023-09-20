@@ -19,7 +19,7 @@ ohos_prebuilt_etc("meson-vdec.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("registers.ko") {
@@ -27,7 +27,7 @@ ohos_prebuilt_etc("registers.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("media_clock.ko") {
@@ -35,7 +35,7 @@ ohos_prebuilt_etc("media_clock.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("firmware.ko") {
@@ -43,7 +43,7 @@ ohos_prebuilt_etc("firmware.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("decoder_common.ko") {
@@ -51,7 +51,7 @@ ohos_prebuilt_etc("decoder_common.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("encoder.ko") {
@@ -59,7 +59,7 @@ ohos_prebuilt_etc("encoder.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("jpegenc.ko") {
@@ -67,7 +67,7 @@ ohos_prebuilt_etc("jpegenc.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amionvideo.ko") {
@@ -75,7 +75,7 @@ ohos_prebuilt_etc("amionvideo.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amrdma.ko") {
@@ -83,7 +83,7 @@ ohos_prebuilt_etc("amrdma.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_h264.ko") {
@@ -91,7 +91,7 @@ ohos_prebuilt_etc("amvdec_h264.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_h264mvc.ko") {
@@ -99,7 +99,7 @@ ohos_prebuilt_etc("amvdec_h264mvc.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_mh264.ko") {
@@ -107,7 +107,7 @@ ohos_prebuilt_etc("amvdec_mh264.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_mmpeg12.ko") {
@@ -115,7 +115,7 @@ ohos_prebuilt_etc("amvdec_mmpeg12.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_mpeg12.ko") {
@@ -123,7 +123,7 @@ ohos_prebuilt_etc("amvdec_mpeg12.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvfm.ko") {
@@ -131,7 +131,7 @@ ohos_prebuilt_etc("amvfm.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvideo.ko") {
@@ -139,7 +139,7 @@ ohos_prebuilt_etc("amvideo.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvpu.ko") {
@@ -147,7 +147,7 @@ ohos_prebuilt_etc("amvpu.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("di.ko") {
@@ -155,7 +155,7 @@ ohos_prebuilt_etc("di.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("dil.ko") {
@@ -163,7 +163,7 @@ ohos_prebuilt_etc("dil.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("stream_input.ko") {
@@ -171,7 +171,7 @@ ohos_prebuilt_etc("stream_input.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("ppmgr.ko") {
@@ -179,7 +179,7 @@ ohos_prebuilt_etc("ppmgr.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvout_legacy.ko") {
@@ -187,7 +187,7 @@ ohos_prebuilt_etc("amvout_legacy.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_av1.ko") {
@@ -195,7 +195,7 @@ ohos_prebuilt_etc("amvdec_av1.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_avs.ko") {
@@ -203,7 +203,7 @@ ohos_prebuilt_etc("amvdec_avs.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_avs2.ko") {
@@ -211,7 +211,7 @@ ohos_prebuilt_etc("amvdec_avs2.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_h265.ko") {
@@ -219,7 +219,7 @@ ohos_prebuilt_etc("amvdec_h265.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_mavs.ko") {
@@ -227,7 +227,7 @@ ohos_prebuilt_etc("amvdec_mavs.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_mjpeg.ko") {
@@ -235,7 +235,7 @@ ohos_prebuilt_etc("amvdec_mjpeg.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_mmjpeg.ko") {
@@ -243,7 +243,7 @@ ohos_prebuilt_etc("amvdec_mmjpeg.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_mmpeg4.ko") {
@@ -251,7 +251,7 @@ ohos_prebuilt_etc("amvdec_mmpeg4.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_mpeg4.ko") {
@@ -259,7 +259,7 @@ ohos_prebuilt_etc("amvdec_mpeg4.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_real.ko") {
@@ -267,7 +267,7 @@ ohos_prebuilt_etc("amvdec_real.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_vc1.ko") {
@@ -275,7 +275,7 @@ ohos_prebuilt_etc("amvdec_vc1.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("amvdec_vp9.ko") {
@@ -283,7 +283,7 @@ ohos_prebuilt_etc("amvdec_vp9.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 group("media_modules") {
