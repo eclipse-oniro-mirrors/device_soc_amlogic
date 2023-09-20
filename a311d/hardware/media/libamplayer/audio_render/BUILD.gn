@@ -59,6 +59,5 @@ ohos_shared_library("libamplayer_audio_render") {
     "-Wdate-time",
   ]
 
-  subsystem_name = "unionman_products"
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }

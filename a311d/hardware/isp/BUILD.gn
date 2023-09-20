@@ -21,7 +21,7 @@ ohos_prebuilt_executable("iv009_isp") {
     source = "bin64/iv009_isp"
   }
   install_images = [ chipset_base_dir ]
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
   install_enable = true
 }
 
@@ -35,7 +35,7 @@ ohos_prebuilt_etc("libisp_c.so.6") {
   }
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
   install_enable = true
 }
 
@@ -49,7 +49,7 @@ ohos_prebuilt_etc("libdl.so.2") {
   }
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
   install_enable = true
 }
 
@@ -63,7 +63,7 @@ ohos_prebuilt_etc("libisp_pthread.so.0") {
   }
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
   install_enable = true
 }
 
@@ -76,7 +76,7 @@ ohos_prebuilt_executable("ld-linux.so") {
   module_install_dir = "bin"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
   install_enable = true
 }
 
@@ -87,7 +87,7 @@ if (target_cpu == "arm64") {
     install_images = [ chipset_base_dir ]
     symlink_target_name = [ "libstdc++.so.6" ]
 
-    part_name = "unionman_products"
+    part_name = "device_unionpi_tiger"
     install_enable = true
   }
 
@@ -96,7 +96,7 @@ if (target_cpu == "arm64") {
     module_install_dir = "lib64/glibc"
     install_images = [ chipset_base_dir ]
 
-    part_name = "unionman_products"
+    part_name = "device_unionpi_tiger"
     install_enable = true
   }
 
@@ -106,7 +106,7 @@ if (target_cpu == "arm64") {
     install_images = [ chipset_base_dir ]
     symlink_target_name = [ "librt.so.1" ]
 
-    part_name = "unionman_products"
+    part_name = "device_unionpi_tiger"
     install_enable = true
   }
 
@@ -115,7 +115,7 @@ if (target_cpu == "arm64") {
     module_install_dir = "lib64/glibc"
     install_images = [ chipset_base_dir ]
 
-    part_name = "unionman_products"
+    part_name = "device_unionpi_tiger"
     install_enable = true
   }
 }
@@ -125,7 +125,7 @@ ohos_prebuilt_etc("iv009_isp.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("iv009_isp_iq.ko") {
@@ -133,7 +133,7 @@ ohos_prebuilt_etc("iv009_isp_iq.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("iv009_isp_lens.ko") {
@@ -141,7 +141,7 @@ ohos_prebuilt_etc("iv009_isp_lens.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_prebuilt_etc("iv009_isp_sensor.ko") {
@@ -149,7 +149,7 @@ ohos_prebuilt_etc("iv009_isp_sensor.ko") {
   module_install_dir = "modules"
   install_images = [ chipset_base_dir ]
 
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 group("isp") {
