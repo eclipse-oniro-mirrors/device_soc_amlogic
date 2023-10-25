@@ -28,6 +28,7 @@ ohos_shared_library("libamplayer_audio_render") {
     "//foundation/multimedia/audio_framework/frameworks/native/hdiadapter/sink/primary",
     "//foundation/multimedia/audio_framework/frameworks/native/hdiadapter/sink/common",
     "//foundation/multimedia/audio_framework/interfaces/inner_api/native/audiocommon/include",
+    "//foundation/multimedia/audio_framework/frameworks/native/hdiadapter/common/include",
     "../include",
   ]
 
