@@ -46,74 +46,68 @@ DisplayBufferVdiImpl::~DisplayBufferVdiImpl()
 
 int32_t DisplayBufferVdiImpl::AllocMem(const AllocInfo& info, BufferHandle*& handle) const
 {
-#ifdef GRALLOC_GBM_SUPPORT
-    if (info.usage & HBM_USE_MEM_DMA) {
-        return GbmAllocMem(&info, &handle);
-    }
-#endif
-    DISPLAY_LOGE("the usage is not support 0x(%{public}" PRIx64 ")", info.usage);
-    return HDF_ERR_NOT_SUPPORT;
+    return GbmAllocMem(&info, &handle);
 }
 
 void DisplayBufferVdiImpl::FreeMem(const BufferHandle& handle) const
 {
-#ifdef GRALLOC_GBM_SUPPORT
-    if (handle.usage & HBM_USE_MEM_DMA) {
-        GbmFreeMem(const_cast<BufferHandle *>(&handle));
-        return;
-    }
-#endif
-    DISPLAY_LOGE("the usage is not support 0x%{public}" PRIx64 "", handle.usage);
+    GbmFreeMem(const_cast<BufferHandle *>(&handle));
 }
 
 void* DisplayBufferVdiImpl::Mmap(const BufferHandle& handle) const
 {
-#ifdef GRALLOC_GBM_SUPPORT
-    if (handle.usage & HBM_USE_MEM_DMA) {
-        return GbmMmap(const_cast<BufferHandle *>(&handle));
-    }
-#endif
-    DISPLAY_LOGE("the usage is not support 0x%{public}" PRIx64 "", handle.usage);
-    return nullptr;
+    return GbmMmap(const_cast<BufferHandle *>(&handle));
 }
 
 int32_t DisplayBufferVdiImpl::Unmap(const BufferHandle& handle) const
 {
-#ifdef GRALLOC_GBM_SUPPORT
-    if (handle.usage & HBM_USE_MEM_DMA) {
-        return GbmUnmap(const_cast<BufferHandle *>(&handle));
-    }
-#endif
-    DISPLAY_LOGE("the usage is not support 0x%{public}" PRIx64 "", handle.usage);
-    return HDF_ERR_NOT_SUPPORT;
+    return GbmUnmap(const_cast<BufferHandle *>(&handle));
 }
 
 int32_t DisplayBufferVdiImpl::FlushCache(const BufferHandle& handle) const
 {
-#ifdef GRALLOC_GBM_SUPPORT
-    if (handle.usage & HBM_USE_MEM_DMA) {
-        return GbmFlushCache(const_cast<BufferHandle *>(&handle));
-    }
-#endif
-    DISPLAY_LOGE("the usage is not support 0x%{public}" PRIx64 "", handle.usage);
-    return HDF_ERR_NOT_SUPPORT;
+    return GbmFlushCache(const_cast<BufferHandle *>(&handle));
 }
 
 int32_t DisplayBufferVdiImpl::InvalidateCache(const BufferHandle& handle) const
 {
-#ifdef GRALLOC_GBM_SUPPORT
-    if (handle.usage & HBM_USE_MEM_DMA) {
-        return GbmInvalidateCache(const_cast<BufferHandle *>(&handle));
-    }
-#endif
-    DISPLAY_LOGE("the usage is not support 0x%{public}" PRIx64 "", handle.usage);
-    return HDF_ERR_NOT_SUPPORT;
+    return GbmInvalidateCache(const_cast<BufferHandle *>(&handle));
 }
 
 int32_t DisplayBufferVdiImpl::IsSupportedAlloc(const std::vector<VerifyAllocInfo>& infos,
     std::vector<bool>& supporteds) const
 {
-    return HDF_ERR_NOT_SUPPORT;
+    return DISPLAY_NOT_SUPPORT;
+}
+
+int32_t DisplayBufferVdiImpl::RegisterBuffer(const BufferHandle& handle)
+{
+    DISPLAY_LOGE("%s is not supported", __func__);
+    return DISPLAY_NOT_SUPPORT;
+}
+
+int32_t DisplayBufferVdiImpl::SetMetadata(const BufferHandle& handle, uint32_t key, const std::vector<uint8_t>& value)
+{
+    DISPLAY_LOGE("%s is not supported", __func__);
+    return DISPLAY_NOT_SUPPORT;
+}
+
+int32_t DisplayBufferVdiImpl::GetMetadata(const BufferHandle& handle, uint32_t key, std::vector<uint8_t>& value)
+{
+    DISPLAY_LOGE("%s is not supported", __func__);
+    return DISPLAY_NOT_SUPPORT;
+}
+
+int32_t DisplayBufferVdiImpl::ListMetadataKeys(const BufferHandle& handle, std::vector<uint32_t>& keys)
+{
+    DISPLAY_LOGE("%s is not supported", __func__);
+    return DISPLAY_NOT_SUPPORT;
+}
+
+int32_t DisplayBufferVdiImpl::EraseMetadataKey(const BufferHandle& handle, uint32_t key)
+{
+    DISPLAY_LOGE("%s is not supported", __func__);
+    return DISPLAY_NOT_SUPPORT;
 }
 
 extern "C" IDisplayBufferVdi* CreateDisplayBufferVdi()
