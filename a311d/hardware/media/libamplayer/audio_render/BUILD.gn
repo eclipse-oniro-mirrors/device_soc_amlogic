@@ -33,7 +33,7 @@ ohos_shared_library("libamplayer_audio_render") {
   ]
 
   configs = [
-    "//foundation/graphic/graphic_2d/frameworks/surface:surface_public_config",
+    "//foundation/graphic/graphic_surface/surface:surface_public_config",
     "//foundation/multimedia/player_framework/services/utils:media_service_utils_public_config",
   ]
 
