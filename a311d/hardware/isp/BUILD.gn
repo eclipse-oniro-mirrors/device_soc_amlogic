@@ -30,7 +30,7 @@ ohos_prebuilt_etc("libisp_c.so.6") {
     source = "lib/libisp_c.so.6"
     module_install_dir = "lib/glibc"
   } else {
-    source = "lib64/libisp_c.so.6"
+    source = "lib64/libc.so.6"
     module_install_dir = "lib64/glibc"
   }
   install_images = [ chipset_base_dir ]
@@ -58,7 +58,7 @@ ohos_prebuilt_etc("libisp_pthread.so.0") {
     source = "lib/libisp_pthread.so.0"
     module_install_dir = "lib/glibc"
   } else {
-    source = "lib64/libisp_pthread.so.0"
+    source = "lib64/libpthread.so.0"
     module_install_dir = "lib64/glibc"
   }
   install_images = [ chipset_base_dir ]
